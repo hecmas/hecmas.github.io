@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: https://hecmas.github.io/sitemap.xml

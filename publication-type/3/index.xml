@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>3 | Héctor Masip Ardevol</title><link>https://hecmas.github.io/publication-type/3/</link><atom:link href="https://hecmas.github.io/publication-type/3/index.xml" rel="self" type="application/rss+xml"/><description>3</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate><image><url>https://hecmas.github.io/media/icon_hu4f2343c08b5429b30889a64aa4ca8e00_26881_512x512_fill_lanczos_center_3.png</url><title>3</title><link>https://hecmas.github.io/publication-type/3/</link></image><item><title>An example preprint / working paper</title><link>https://hecmas.github.io/publication/preprint/</link><pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/publication/preprint/</guid><description>&lt;div class="alert alert-note">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>3 | Héctor Masip Ardevol</title><link>https://hecmas.github.io/publication-type/3/</link><atom:link href="https://hecmas.github.io/publication-type/3/index.xml" rel="self" type="application/rss+xml"/><description>3</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 13 Aug 2022 00:00:00 +0000</lastBuildDate><image><url>https://hecmas.github.io/media/icon_hu4f2343c08b5429b30889a64aa4ca8e00_26881_512x512_fill_lanczos_center_3.png</url><title>3</title><link>https://hecmas.github.io/publication-type/3/</link></image><item><title>RapidUp: Multi-Domain Permutation Protocol for Lookup Tables</title><link>https://hecmas.github.io/publication/preprint/rapidup/</link><pubDate>Sat, 13 Aug 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/publication/preprint/rapidup/</guid><description>&lt;!--
+&lt;div class="alert alert-note">
 &lt;div>
 Create your slides in Markdown - click the &lt;em>Slides&lt;/em> button to check out the example.
 &lt;/div>
 &lt;/div>
-&lt;p>Supplementary notes can be added here, including &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">code, math, and images&lt;/a>.&lt;/p></description></item></channel></rss>
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --></description></item><item><title>PlonKup: Reconciling PlonK with plookup</title><link>https://hecmas.github.io/publication/preprint/plonkup/</link><pubDate>Tue, 25 Jan 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/publication/preprint/plonkup/</guid><description>&lt;!--
+&lt;div class="alert alert-note">
+&lt;div>
+Create your slides in Markdown - click the &lt;em>Slides&lt;/em> button to check out the example.
+&lt;/div>
+&lt;/div>
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --></description></item></channel></rss>

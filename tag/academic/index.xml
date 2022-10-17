@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Academic | Héctor Masip Ardevol</title><link>https://hecmas.github.io/tag/academic/</link><atom:link href="https://hecmas.github.io/tag/academic/index.xml" rel="self" type="application/rss+xml"/><description>Academic</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 14 Oct 2022 00:00:00 +0000</lastBuildDate><image><url>https://hecmas.github.io/media/icon_hu4f2343c08b5429b30889a64aa4ca8e00_26881_512x512_fill_lanczos_center_3.png</url><title>Academic</title><link>https://hecmas.github.io/tag/academic/</link></image><item><title>Books for Cryptography and Blockchain</title><link>https://hecmas.github.io/post/misc/books/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/misc/books/</guid><description>&lt;!-- **TODO**: Explain why these books are in this list in detail. -->
-&lt;h2 id="table-of-contents">Table of Contents&lt;/h2>
+&lt;h2 id="table-of-contents----omit-in-toc---">Table of Contents &lt;!-- omit in toc -->&lt;/h2>
 &lt;ul>
-&lt;li>&lt;a href="#table-of-contents">Table of Contents&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#mathematical-background">Mathematical Background&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#cryptography">Cryptography&lt;/a>
 &lt;ul>
-&lt;li>&lt;a href="#pure-cryptography-computer-nerd_face">Pure Cryptography 💻 🤓&lt;/a>&lt;/li>
-&lt;li>&lt;a href="#applications-couple">Applications 👫&lt;/a>&lt;/li>
-&lt;li>&lt;a href="#elliptic-curve-cryptography-nerd_face">Elliptic Curve Cryptography 🤓&lt;/a>&lt;/li>
-&lt;li>&lt;a href="#zero-knowledge-proofs-computer-nerd_face">Zero-Knowledge Proofs 💻 🤓&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#pure-cryptography">Pure Cryptography&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#applications">Applications&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#elliptic-curve-cryptography">Elliptic Curve Cryptography&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#zero-knowledge-proofs">Zero-Knowledge Proofs&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/li>
-&lt;li>&lt;a href="#blockchain-computer-couple">Blockchain 💻 👫&lt;/a>&lt;/li>
-&lt;li>&lt;a href="#computer-science-computer">Computer Science 💻&lt;/a>&lt;/li>
-&lt;li>&lt;a href="#probability-couple">Probability 👫&lt;/a>&lt;/li>
-&lt;li>&lt;a href="#recreational-couple">Recreational 👫&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#blockchain">Blockchain&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#computer-science">Computer Science&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#probability">Probability&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#recreational">Recreational&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;div class="alert alert-note">
 &lt;div>
@@ -26,6 +25,7 @@
 &lt;/ul>
 &lt;/div>
 &lt;/div>
+&lt;!--
 &lt;div class="alert alert-note">
 &lt;div>
 &lt;p>I will also use the following emojis to describe who the books are intended for:&lt;/p>
@@ -45,64 +45,62 @@
 &lt;/ul>
 &lt;/div>
 &lt;/div>
+-->
 &lt;h2 id="mathematical-background">Mathematical Background&lt;/h2>
 &lt;ul>
-&lt;li>🔴 💻 🤓 &lt;a href="https://shoup.net/ntb/" target="_blank" rel="noopener">A Computational Introduction to Number Theory and Algebra [2008]&lt;/a> - Victor Shoup&lt;/li>
-&lt;li>🔵 🤓 &lt;a href="http://abstract.ups.edu/" target="_blank" rel="noopener">Abstract Algebra: Theory and Applications [2021]&lt;/a> - Thomas W. Judson (This book is updated yearly)&lt;/li>
+&lt;li>⚫ &lt;a href="https://shoup.net/ntb/" target="_blank" rel="noopener">A Computational Introduction to Number Theory and Algebra&lt;/a> [2008] - Victor Shoup&lt;/li>
+&lt;li>🔵 &lt;a href="http://abstract.ups.edu/" target="_blank" rel="noopener">Abstract Algebra: Theory and Applications&lt;/a> [2021] - Thomas W. Judson (This book is updated yearly)&lt;/li>
 &lt;/ul>
 &lt;h2 id="cryptography">Cryptography&lt;/h2>
-&lt;h3 id="pure-cryptography--">Pure Cryptography 💻 🤓&lt;/h3>
+&lt;h3 id="pure-cryptography">Pure Cryptography&lt;/h3>
 &lt;ul>
-&lt;li>🔵 &lt;a href="https://cacr.uwaterloo.ca/hac/" target="_blank" rel="noopener">Handbook of Applied Cryptography [2001]&lt;/a> - Menezes&lt;/li>
-&lt;li>🔴 &lt;a href="https://www.crypto-textbook.com/" target="_blank" rel="noopener">Understanding Cryptography: A Textbook for Students and Practitioners&lt;/a> - Christof Paar and Jan Pelzl. Video lectures are available &lt;a href="https://www.youtube.com/channel/UC1usFRN4LCMcfIV7UjHNuQg/videos" target="_blank" rel="noopener">here&lt;/a>.&lt;/li>
-&lt;li>⚫ &lt;a href="https://www.amazon.es/Introduction-Mathematical-Cryptography-Undergraduate-Mathematics/dp/1441926747" target="_blank" rel="noopener">An Introduction to Mathematical Cryptography [2010]&lt;/a> - Many Authors&lt;/li>
-&lt;li>🔵 &lt;a href="https://www.amazon.es/Cryptography-Made-Simple-Information-Security/dp/3319219359" target="_blank" rel="noopener">Cryptography Made Simple [2015]&lt;/a> - Nigel Smart&lt;/li>
-&lt;li>🔵 &lt;a href="https://www.amazon.es/Course-Cryptography-Applied-Undergraduate-Texts/dp/1470450550" target="_blank" rel="noopener">A Course in Cryptography [2019]&lt;/a> - Heiko Knospe&lt;/li>
-&lt;li>🔴 🤓 &lt;a href="http://toc.cryptobook.us/" target="_blank" rel="noopener">A Graduate Course in Applied Cryptography [2020]&lt;/a> - Dan Boneh and Victor Shoup (This book will be updated, it is in version 0.5)&lt;/li>
-&lt;li>⚫ &lt;a href="https://www.amazon.es/Real-world-Cryptography-David-Wong/dp/1617296716" target="_blank" rel="noopener">Real-World Cryptography [2021]&lt;/a> - David Wong&lt;/li>
+&lt;li>🔵 &lt;a href="https://cacr.uwaterloo.ca/hac/" target="_blank" rel="noopener">Handbook of Applied Cryptography&lt;/a> [2001] - Menezes&lt;/li>
+&lt;li>🔴 &lt;a href="https://www.crypto-textbook.com/" target="_blank" rel="noopener">Understanding Cryptography: A Textbook for Students and Practitioners&lt;/a> [2010] - Christof Paar and Jan Pelzl. Video lectures are available &lt;a href="https://www.youtube.com/channel/UC1usFRN4LCMcfIV7UjHNuQg/videos" target="_blank" rel="noopener">here&lt;/a>&lt;/li>
+&lt;li>⚫ &lt;a href="https://www.amazon.es/Introduction-Mathematical-Cryptography-Undergraduate-Mathematics/dp/1441926747" target="_blank" rel="noopener">An Introduction to Mathematical Cryptography&lt;/a> [2010] - Many Authors&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.amazon.es/Cryptography-Made-Simple-Information-Security/dp/3319219359" target="_blank" rel="noopener">Cryptography Made Simple&lt;/a> [2015] - Nigel Smart&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.amazon.es/Course-Cryptography-Applied-Undergraduate-Texts/dp/1470450550" target="_blank" rel="noopener">A Course in Cryptography&lt;/a> [2019] - Heiko Knospe&lt;/li>
+&lt;li>🔴 &lt;a href="http://toc.cryptobook.us/" target="_blank" rel="noopener">A Graduate Course in Applied Cryptography&lt;/a> [2020] - Dan Boneh and Victor Shoup (This book will be updated, it is in version 0.5)&lt;/li>
+&lt;li>🔴 &lt;a href="https://www.amazon.es/Real-world-Cryptography-David-Wong/dp/1617296716" target="_blank" rel="noopener">Real-World Cryptography&lt;/a> [2021] - David Wong&lt;/li>
 &lt;/ul>
-&lt;h3 id="applications-">Applications 👫&lt;/h3>
+&lt;h3 id="applications">Applications&lt;/h3>
 &lt;ul>
-&lt;li>⚫ &lt;a href="https://www.amazon.es/Self-Sovereign-Identity-Decentralized-verifiable-credentials/dp/1617296597" target="_blank" rel="noopener">Self-Sovereign Identity: Decentralized digital identity and verifiable credentials [2001]&lt;/a> - Alex Preukschat and Drummond Reed&lt;/li>
-&lt;li>⚫ &lt;a href="https://www.amazon.com/Next-generation-Cryptography-Algorithms-Explained-implementation-ebook/dp/B093Y11H9Q" target="_blank" rel="noopener">Cryptography Algorithms: A guide to algorithms in blockchain, quantum cryptography, zero-knowledge protocols, and homomorphic encryption [2022]&lt;/a> -
-Massimo Bertaccini&lt;/li>
+&lt;li>⚫ &lt;a href="https://www.amazon.es/Self-Sovereign-Identity-Decentralized-verifiable-credentials/dp/1617296597" target="_blank" rel="noopener">Self-Sovereign Identity: Decentralized digital identity and verifiable credentials&lt;/a> [2001] - Alex Preukschat and Drummond Reed&lt;/li>
+&lt;li>⚫ &lt;a href="https://www.amazon.com/Next-generation-Cryptography-Algorithms-Explained-implementation-ebook/dp/B093Y11H9Q" target="_blank" rel="noopener">Cryptography Algorithms: A guide to algorithms in blockchain, quantum cryptography, zero-knowledge protocols, and homomorphic encryption&lt;/a> [2022] - Massimo Bertaccini&lt;/li>
 &lt;/ul>
-&lt;h3 id="elliptic-curve-cryptography-">Elliptic Curve Cryptography 🤓&lt;/h3>
+&lt;h3 id="elliptic-curve-cryptography">Elliptic Curve Cryptography&lt;/h3>
 &lt;ul>
-&lt;li>🔴 &lt;a href="https://www.amazon.es/Elliptic-Curves-Cryptography-Mathematics-Applications/dp/1420071467" target="_blank" rel="noopener">Elliptic Curves: Number Theory and Cryptography [2008]&lt;/a> - Lawrence Washington&lt;/li>
-&lt;li>⚫ &lt;a href="https://static1.squarespace.com/static/5fdbb09f31d71c1227082339/t/5ff394720493bd28278889c6/1609798774687/PairingsForBeginners.pdf" target="_blank" rel="noopener">Pairings for Beginners [2012]&lt;/a> - Craig Costello&lt;/li>
+&lt;li>🔴 &lt;a href="https://www.amazon.es/Elliptic-Curves-Cryptography-Mathematics-Applications/dp/1420071467" target="_blank" rel="noopener">Elliptic Curves: Number Theory and Cryptography&lt;/a> [2008] - Lawrence Washington&lt;/li>
+&lt;li>⚫ &lt;a href="https://static1.squarespace.com/static/5fdbb09f31d71c1227082339/t/5ff394720493bd28278889c6/1609798774687/PairingsForBeginners.pdf" target="_blank" rel="noopener">Pairings for Beginners&lt;/a> [2012] - Craig Costello&lt;/li>
 &lt;/ul>
-&lt;h3 id="zero-knowledge-proofs--">Zero-Knowledge Proofs 💻 🤓&lt;/h3>
+&lt;h3 id="zero-knowledge-proofs">Zero-Knowledge Proofs&lt;/h3>
 &lt;ul>
-&lt;li>⚫ &lt;a href="https://www.amazon.es/Bringing-Zero-Knowledge-Proofs-Knowledge-Practice/dp/383253217X" target="_blank" rel="noopener">Bringing Zero-Knowledge Proofs of Knowledge to Practice [2012]&lt;/a> - Stephan Krenn&lt;/li>
-&lt;li>🔴 &lt;a href="https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html" target="_blank" rel="noopener">Proofs, Arguments, and Zero-Knowledge [2022]&lt;/a> - Justin Thaler (This book is not in final form)&lt;/li>
+&lt;li>⚫ &lt;a href="https://www.amazon.es/Bringing-Zero-Knowledge-Proofs-Knowledge-Practice/dp/383253217X" target="_blank" rel="noopener">Bringing Zero-Knowledge Proofs of Knowledge to Practice&lt;/a> [2012] - Stephan Krenn&lt;/li>
+&lt;li>🔴 &lt;a href="https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html" target="_blank" rel="noopener">Proofs, Arguments, and Zero-Knowledge&lt;/a> [2022] - Justin Thaler (This book is not in final form)&lt;/li>
 &lt;/ul>
-&lt;h2 id="blockchain--">Blockchain 💻 👫&lt;/h2>
+&lt;h2 id="blockchain">Blockchain&lt;/h2>
 &lt;ul>
-&lt;li>🔵 &lt;a href="https://www.amazon.com/-/es/Arvind-Narayanan/dp/0691171696" target="_blank" rel="noopener">Bitcoin and Cryptocurrency Technologies: A Comprehensive Introduction [2016]&lt;/a> - Many Authors&lt;/li>
-&lt;li>🔴 &lt;a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank" rel="noopener">Mastering Bitcoin: Programming the Open Blockchain [2018]&lt;/a> - Andreas M. Antonopoulos (second version of the book). The have created a Coursera course &lt;a href="https://www.coursera.org/learn/cryptocurrency#syllabus" target="_blank" rel="noopener">here&lt;/a>.&lt;/li>
-&lt;li>🔵 &lt;a href="https://github.com/ethereumbook/ethereumbook" target="_blank" rel="noopener">Mastering Ethereum: Building Smart Contracts and Dapps [2018]&lt;/a> - Andreas M. Antonopoulos and Gavin Wood (they are working in the second version).&lt;/li>
-&lt;li>Mastering Monero&lt;/li>
-&lt;li>Zero to Monero v2&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.amazon.com/-/es/Arvind-Narayanan/dp/0691171696" target="_blank" rel="noopener">Bitcoin and Cryptocurrency Technologies: A Comprehensive Introduction&lt;/a> [2016] - Many Authors&lt;/li>
+&lt;li>🔵 &lt;a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank" rel="noopener">Mastering Bitcoin: Programming the Open Blockchain&lt;/a> [2016] - Andreas M. Antonopoulos (second version of the book). The have created a Coursera course &lt;a href="https://www.coursera.org/learn/cryptocurrency#syllabus" target="_blank" rel="noopener">here&lt;/a>&lt;/li>
+&lt;li>🔵 &lt;a href="https://github.com/ethereumbook/ethereumbook" target="_blank" rel="noopener">Mastering Ethereum: Building Smart Contracts and Dapps&lt;/a> [2018] - Andreas M. Antonopoulos and Gavin Wood (they are working in the second version)&lt;/li>
+&lt;li>🔵 &lt;a href="https://masteringmonero.com/" target="_blank" rel="noopener">Mastering Monero: The future of private transactions&lt;/a> [2018] - SerHack&lt;/li>
 &lt;/ul>
-&lt;h2 id="computer-science-">Computer Science 💻&lt;/h2>
+&lt;h2 id="computer-science">Computer Science&lt;/h2>
 &lt;ul>
-&lt;li>🔵 &lt;a href="https://www.amazon.es/Computational-Complexity-Modern-Approach-English-ebook/dp/B009019SN0" target="_blank" rel="noopener">Computational Complexity: A Modern Approach [2009]&lt;/a> - Sanjeev Arora and Boaz Barak&lt;/li>
-&lt;li>🔵 &lt;a href="https://www.amazon.es/Introduction-Theory-Computation-Michael-Sipser/dp/113318779X" target="_blank" rel="noopener">Introduction to the Theory of Computation [2012]&lt;/a> - Michael Sipser (Third edition)&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.amazon.es/Computational-Complexity-Modern-Approach-English-ebook/dp/B009019SN0" target="_blank" rel="noopener">Computational Complexity: A Modern Approach&lt;/a> [2009] - Sanjeev Arora and Boaz Barak&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.amazon.es/Introduction-Theory-Computation-Michael-Sipser/dp/113318779X" target="_blank" rel="noopener">Introduction to the Theory of Computation&lt;/a> [2012] - Michael Sipser (Third edition)&lt;/li>
 &lt;/ul>
-&lt;h2 id="probability-">Probability 👫&lt;/h2>
+&lt;h2 id="probability">Probability&lt;/h2>
 &lt;ul>
-&lt;li>🔵 &lt;a href="http://julio.staff.ipb.ac.id/files/2015/02/Ross_8th_ed_English.pdf" target="_blank" rel="noopener">A First Course in Probability [2013]&lt;/a> -Sheldon Ross (Ninth edition)&lt;/li>
-&lt;li>🔵 &lt;a href="https://geoffroycouteau.github.io/assets/pdf/cheat_sheet.pdf" target="_blank" rel="noopener">Probability Cheat Sheet [2022]&lt;/a> - Geoffroy Couteau&lt;/li>
+&lt;li>🔵 &lt;a href="http://julio.staff.ipb.ac.id/files/2015/02/Ross_8th_ed_English.pdf" target="_blank" rel="noopener">A First Course in Probability&lt;/a> [2013] - Sheldon Ross (Ninth edition)&lt;/li>
+&lt;li>🔵 &lt;a href="https://geoffroycouteau.github.io/assets/pdf/cheat_sheet.pdf" target="_blank" rel="noopener">Probability Cheat Sheet&lt;/a> [2022] - Geoffroy Couteau&lt;/li>
 &lt;/ul>
-&lt;h2 id="recreational-">Recreational 👫&lt;/h2>
+&lt;h2 id="recreational">Recreational&lt;/h2>
 &lt;ul>
-&lt;li>🔵 &lt;a href="https://www.cs.utexas.edu/users/EWD/ewd03xx/EWD340.PDF" target="_blank" rel="noopener">The Humble Programmer [1972]&lt;/a> - Edsger Dijkstra&lt;/li>
-&lt;li>⚫ &lt;a href="https://www.amazon.es/Codebreakers-Comprehensive-History-Communication-Internet/dp/0684831309" target="_blank" rel="noopener">The Codebreakers: The Comprehensive History of Secret Communication from Ancient Times to the Internet [1997]&lt;/a> - David Kahn&lt;/li>
-&lt;li>🔵 &lt;a href="https://www.amazon.es/Code-Book-Science-Secrecy-Cryptography/dp/0385495323" target="_blank" rel="noopener">The Code Book: The Science of Secrecy from Ancient Egypt to Quantum Cryptography [2000]&lt;/a> - Simon Singh&lt;/li>
-&lt;/ul></description></item><item><title>Degree Adjustment in SNARKs</title><link>https://hecmas.github.io/post/snarks/snark-degree/</link><pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/snarks/snark-degree/</guid><description>&lt;h2 id="table-of-contents">Table of Contents&lt;/h2>
+&lt;li>🔵 &lt;a href="https://www.cs.utexas.edu/users/EWD/ewd03xx/EWD340.PDF" target="_blank" rel="noopener">The Humble Programmer&lt;/a> [1972] - Edsger Dijkstra&lt;/li>
+&lt;li>⚫ &lt;a href="https://www.amazon.es/Codebreakers-Comprehensive-History-Communication-Internet/dp/0684831309" target="_blank" rel="noopener">The Codebreakers: The Comprehensive History of Secret Communication from Ancient Times to the Internet&lt;/a> [1997] - David Kahn&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.amazon.es/Code-Book-Science-Secrecy-Cryptography/dp/0385495323" target="_blank" rel="noopener">The Code Book: The Science of Secrecy from Ancient Egypt to Quantum Cryptography&lt;/a> [2000] - Simon Singh&lt;/li>
+&lt;/ul></description></item><item><title>Degree Adjustment in SNARKs</title><link>https://hecmas.github.io/post/snarks/snark-degree/</link><pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/snarks/snark-degree/</guid><description>&lt;h2 id="table-of-contents----omit-in-toc---">Table of Contents &lt;!-- omit in toc -->&lt;/h2>
 &lt;ul>
-&lt;li>&lt;a href="#table-of-contents">Table of Contents&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#notation">Notation&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#statement">Statement&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#example-randomness-is-necessary">Example: Randomness is Necessary&lt;/a>&lt;/li>

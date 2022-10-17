@@ -9,8 +9,10 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>&lt;strong>Upload&lt;/strong> an existing slide deck to &lt;code>static/&lt;/code> and link using &lt;code>url_slides&lt;/code> parameter in the front matter of the talk file&lt;/li>
 &lt;li>&lt;strong>Embed&lt;/strong> your slides (e.g. Google Slides) or presentation video on this page using &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">shortcodes&lt;/a>.&lt;/li>
 &lt;/ul>
-&lt;p>Further event details, including &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">page elements&lt;/a> such as image galleries, can be added to the body of this page.&lt;/p></description></item><item><title>Books for Cryptography and Blockchain</title><link>https://hecmas.github.io/post/misc/books/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/misc/books/</guid><description>&lt;!-- **TODO**: Explain why these books are in this list in detail. -->
-&lt;h2 id="table-of-contents----omit-in-toc---">Table of Contents &lt;!-- omit in toc -->&lt;/h2>
+&lt;p>Further event details, including &lt;a href="https://wowchemy.com/docs/writing-markdown-latex/" target="_blank" rel="noopener">page elements&lt;/a> such as image galleries, can be added to the body of this page.&lt;/p></description></item><item><title>Books for Cryptography and Blockchain</title><link>https://hecmas.github.io/post/books/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/books/</guid><description>&lt;!-- **TODO**: Explain why these books are in this list in detail. -->
+&lt;details class="toc-inpage d-print-none " open>
+&lt;summary class="font-weight-bold">Table of Contents&lt;/summary>
+&lt;nav id="TableOfContents">
 &lt;ul>
 &lt;li>&lt;a href="#mathematical-background">Mathematical Background&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#cryptography">Cryptography&lt;/a>
@@ -26,6 +28,8 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>&lt;a href="#probability">Probability&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#recreational">Recreational&lt;/a>&lt;/li>
 &lt;/ul>
+&lt;/nav>
+&lt;/details>
 &lt;div class="alert alert-note">
 &lt;div>
 &lt;p>I will use the following colors to show my progress with the books:&lt;/p>
@@ -110,7 +114,10 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>🔵 &lt;a href="https://www.cs.utexas.edu/users/EWD/ewd03xx/EWD340.PDF" target="_blank" rel="noopener">The Humble Programmer&lt;/a> [1972] - Edsger Dijkstra&lt;/li>
 &lt;li>⚫ &lt;a href="https://www.amazon.es/Codebreakers-Comprehensive-History-Communication-Internet/dp/0684831309" target="_blank" rel="noopener">The Codebreakers: The Comprehensive History of Secret Communication from Ancient Times to the Internet&lt;/a> [1997] - David Kahn&lt;/li>
 &lt;li>🔵 &lt;a href="https://www.amazon.es/Code-Book-Science-Secrecy-Cryptography/dp/0385495323" target="_blank" rel="noopener">The Code Book: The Science of Secrecy from Ancient Egypt to Quantum Cryptography&lt;/a> [2000] - Simon Singh&lt;/li>
-&lt;/ul></description></item><item><title>Degree Adjustment in SNARKs</title><link>https://hecmas.github.io/post/snarks/snark-degree/</link><pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/snarks/snark-degree/</guid><description>&lt;h2 id="table-of-contents----omit-in-toc---">Table of Contents &lt;!-- omit in toc -->&lt;/h2>
+&lt;/ul></description></item><item><title>Degree Adjustment in SNARKs</title><link>https://hecmas.github.io/post/snark-degree/</link><pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/snark-degree/</guid><description>
+&lt;details class="toc-inpage d-print-none " open>
+&lt;summary class="font-weight-bold">Table of Contents&lt;/summary>
+&lt;nav id="TableOfContents">
 &lt;ul>
 &lt;li>&lt;a href="#notation">Notation&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#statement">Statement&lt;/a>&lt;/li>
@@ -125,6 +132,8 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>&lt;a href="#when-both-random-values-are-needed">When Both Random Values are Needed?&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#conclusion">Conclusion&lt;/a>&lt;/li>
 &lt;/ul>
+&lt;/nav>
+&lt;/details>
 &lt;h2 id="notation">Notation&lt;/h2>
 &lt;p>We will denote by
 $\mathbb{F}$ to a finite field and
@@ -373,7 +382,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-541287639" class="chart">&lt;/div>
+&lt;div id="chart-281347695" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -382,7 +391,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-541287639', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-281347695', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Books | Héctor Masip Ardevol</title><link>https://hecmas.github.io/tag/books/</link><atom:link href="https://hecmas.github.io/tag/books/index.xml" rel="self" type="application/rss+xml"/><description>Books</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 14 Oct 2022 00:00:00 +0000</lastBuildDate><image><url>https://hecmas.github.io/media/icon_hu4f2343c08b5429b30889a64aa4ca8e00_26881_512x512_fill_lanczos_center_3.png</url><title>Books</title><link>https://hecmas.github.io/tag/books/</link></image><item><title>Books for Cryptography and Blockchain</title><link>https://hecmas.github.io/post/misc/books/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/misc/books/</guid><description>&lt;!-- **TODO**: Explain why these books are in this list in detail. -->
-&lt;h2 id="table-of-contents----omit-in-toc---">Table of Contents &lt;!-- omit in toc -->&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Books | Héctor Masip Ardevol</title><link>https://hecmas.github.io/tag/books/</link><atom:link href="https://hecmas.github.io/tag/books/index.xml" rel="self" type="application/rss+xml"/><description>Books</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 14 Oct 2022 00:00:00 +0000</lastBuildDate><image><url>https://hecmas.github.io/media/icon_hu4f2343c08b5429b30889a64aa4ca8e00_26881_512x512_fill_lanczos_center_3.png</url><title>Books</title><link>https://hecmas.github.io/tag/books/</link></image><item><title>Books for Cryptography and Blockchain</title><link>https://hecmas.github.io/post/books/</link><pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate><guid>https://hecmas.github.io/post/books/</guid><description>&lt;!-- **TODO**: Explain why these books are in this list in detail. -->
+&lt;details class="toc-inpage d-print-none " open>
+&lt;summary class="font-weight-bold">Table of Contents&lt;/summary>
+&lt;nav id="TableOfContents">
 &lt;ul>
 &lt;li>&lt;a href="#mathematical-background">Mathematical Background&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#cryptography">Cryptography&lt;/a>
@@ -15,6 +17,8 @@
 &lt;li>&lt;a href="#probability">Probability&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#recreational">Recreational&lt;/a>&lt;/li>
 &lt;/ul>
+&lt;/nav>
+&lt;/details>
 &lt;div class="alert alert-note">
 &lt;div>
 &lt;p>I will use the following colors to show my progress with the books:&lt;/p>

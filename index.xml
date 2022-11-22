@@ -70,7 +70,7 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;h3 id="pure-cryptography">Pure Cryptography&lt;/h3>
 &lt;ul>
 &lt;li>🔵 &lt;a href="https://cacr.uwaterloo.ca/hac/" target="_blank" rel="noopener">Handbook of Applied Cryptography&lt;/a> [2001] - Menezes&lt;/li>
-&lt;li>🔴 &lt;a href="https://www.crypto-textbook.com/" target="_blank" rel="noopener">Understanding Cryptography: A Textbook for Students and Practitioners&lt;/a> [2010] - Christof Paar and Jan Pelzl. Video lectures are available &lt;a href="https://www.youtube.com/channel/UC1usFRN4LCMcfIV7UjHNuQg/videos" target="_blank" rel="noopener">here&lt;/a>&lt;/li>
+&lt;li>🔵 &lt;a href="https://www.crypto-textbook.com/" target="_blank" rel="noopener">Understanding Cryptography: A Textbook for Students and Practitioners&lt;/a> [2010] - Christof Paar and Jan Pelzl. Video lectures are available &lt;a href="https://www.youtube.com/channel/UC1usFRN4LCMcfIV7UjHNuQg/videos" target="_blank" rel="noopener">here&lt;/a>&lt;/li>
 &lt;li>⚫ &lt;a href="https://www.amazon.es/Introduction-Mathematical-Cryptography-Undergraduate-Mathematics/dp/1441926747" target="_blank" rel="noopener">An Introduction to Mathematical Cryptography&lt;/a> [2010] - Many Authors&lt;/li>
 &lt;li>🔵 &lt;a href="https://www.amazon.es/Cryptography-Made-Simple-Information-Security/dp/3319219359" target="_blank" rel="noopener">Cryptography Made Simple&lt;/a> [2015] - Nigel Smart&lt;/li>
 &lt;li>🔵 &lt;a href="https://www.amazon.es/Course-Cryptography-Applied-Undergraduate-Texts/dp/1470450550" target="_blank" rel="noopener">A Course in Cryptography&lt;/a> [2019] - Heiko Knospe&lt;/li>
@@ -85,12 +85,13 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;h3 id="elliptic-curve-cryptography">Elliptic Curve Cryptography&lt;/h3>
 &lt;ul>
 &lt;li>🔴 &lt;a href="https://www.amazon.es/Elliptic-Curves-Cryptography-Mathematics-Applications/dp/1420071467" target="_blank" rel="noopener">Elliptic Curves: Number Theory and Cryptography&lt;/a> [2008] - Lawrence Washington&lt;/li>
-&lt;li>⚫ &lt;a href="https://static1.squarespace.com/static/5fdbb09f31d71c1227082339/t/5ff394720493bd28278889c6/1609798774687/PairingsForBeginners.pdf" target="_blank" rel="noopener">Pairings for Beginners&lt;/a> [2012] - Craig Costello&lt;/li>
+&lt;li>🔴 &lt;a href="https://static1.squarespace.com/static/5fdbb09f31d71c1227082339/t/5ff394720493bd28278889c6/1609798774687/PairingsForBeginners.pdf" target="_blank" rel="noopener">Pairings for Beginners&lt;/a> [2012] - Craig Costello&lt;/li>
 &lt;/ul>
 &lt;h3 id="zero-knowledge-proofs">Zero-Knowledge Proofs&lt;/h3>
 &lt;ul>
 &lt;li>⚫ &lt;a href="https://www.amazon.es/Bringing-Zero-Knowledge-Proofs-Knowledge-Practice/dp/383253217X" target="_blank" rel="noopener">Bringing Zero-Knowledge Proofs of Knowledge to Practice&lt;/a> [2012] - Stephan Krenn&lt;/li>
 &lt;li>🔴 &lt;a href="https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html" target="_blank" rel="noopener">Proofs, Arguments, and Zero-Knowledge&lt;/a> [2022] - Justin Thaler (This book is not in final form)&lt;/li>
+&lt;li>🔴 &lt;a href="https://docs.zkproof.org/reference" target="_blank" rel="noopener">ZKProof Community Reference v0.3&lt;/a> [2022] - Community&lt;/li>
 &lt;/ul>
 &lt;h2 id="blockchain">Blockchain&lt;/h2>
 &lt;ul>
@@ -382,7 +383,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-483217965" class="chart">&lt;/div>
+&lt;div id="chart-945312786" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -391,7 +392,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-483217965', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-945312786', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

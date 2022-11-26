@@ -23,7 +23,12 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>&lt;a href="#zero-knowledge-proofs">Zero-Knowledge Proofs&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/li>
-&lt;li>&lt;a href="#blockchain">Blockchain&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#blockchain">Blockchain&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#theory">Theory&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#solidity">Solidity&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
 &lt;li>&lt;a href="#computer-science">Computer Science&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#probability">Probability&lt;/a>&lt;/li>
 &lt;li>&lt;a href="#recreational">Recreational&lt;/a>&lt;/li>
@@ -94,11 +99,17 @@ Click on the &lt;strong>Slides&lt;/strong> button above to view the built-in sli
 &lt;li>🔴 &lt;a href="https://docs.zkproof.org/reference" target="_blank" rel="noopener">ZKProof Community Reference v0.3&lt;/a> [2022] - Community&lt;/li>
 &lt;/ul>
 &lt;h2 id="blockchain">Blockchain&lt;/h2>
+&lt;h3 id="theory">Theory&lt;/h3>
 &lt;ul>
 &lt;li>🔵 &lt;a href="https://www.amazon.com/-/es/Arvind-Narayanan/dp/0691171696" target="_blank" rel="noopener">Bitcoin and Cryptocurrency Technologies: A Comprehensive Introduction&lt;/a> [2016] - Many Authors&lt;/li>
 &lt;li>🔵 &lt;a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank" rel="noopener">Mastering Bitcoin: Programming the Open Blockchain&lt;/a> [2016] - Andreas M. Antonopoulos (second version of the book). The have created a Coursera course &lt;a href="https://www.coursera.org/learn/cryptocurrency#syllabus" target="_blank" rel="noopener">here&lt;/a>&lt;/li>
 &lt;li>🔵 &lt;a href="https://github.com/ethereumbook/ethereumbook" target="_blank" rel="noopener">Mastering Ethereum: Building Smart Contracts and Dapps&lt;/a> [2018] - Andreas M. Antonopoulos and Gavin Wood (they are working in the second version)&lt;/li>
 &lt;li>🔵 &lt;a href="https://masteringmonero.com/" target="_blank" rel="noopener">Mastering Monero: The future of private transactions&lt;/a> [2018] - SerHack&lt;/li>
+&lt;/ul>
+&lt;h3 id="solidity">Solidity&lt;/h3>
+&lt;ul>
+&lt;li>🔴 &lt;a href="https://ethernaut.openzeppelin.com/" target="_blank" rel="noopener">Ethernaut&lt;/a> - Learn by hacking smart contracts&lt;/li>
+&lt;li>⚫ &lt;a href="https://cryptozombies.io/" target="_blank" rel="noopener">CryptoZombies&lt;/a> - Learn by building simple games&lt;/li>
 &lt;/ul>
 &lt;h2 id="computer-science">Computer Science&lt;/h2>
 &lt;ul>
@@ -383,7 +394,7 @@ console.log('code block');
 &lt;p>Wowchemy supports the popular &lt;a href="https://plot.ly/" target="_blank" rel="noopener">Plotly&lt;/a> format for interactive charts.&lt;/p>
 &lt;p>Save your Plotly JSON in your page folder, for example &lt;code>line-chart.json&lt;/code>, and then add the &lt;code>{{&amp;lt; chart data=&amp;quot;line-chart&amp;quot; &amp;gt;}}&lt;/code> shortcode where you would like the chart to appear.&lt;/p>
 &lt;p>Demo:&lt;/p>
-&lt;div id="chart-945312786" class="chart">&lt;/div>
+&lt;div id="chart-639745128" class="chart">&lt;/div>
 &lt;script>
 (function() {
 let a = setInterval( function() {
@@ -392,7 +403,7 @@ return;
 }
 clearInterval( a );
 Plotly.d3.json("./line-chart.json", function(chart) {
-Plotly.plot('chart-945312786', chart.data, chart.layout, {responsive: true});
+Plotly.plot('chart-639745128', chart.data, chart.layout, {responsive: true});
 });
 }, 500 );
 })();

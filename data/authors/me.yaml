@@ -2,115 +2,126 @@ schema: hugoblox/author/v1
 slug: me
 is_owner: true
 name:
-  display: Dr. Alex Johnson
-  given: Alex
-  family: Johnson
+  display: Héctor Masip Ardevol
+  given: Héctor
+  family: Masip Ardevol
   alternate: ''  # Example: 王伟
   pronunciation: ''  # Example: Wáng Wěi
-  pronouns: he/him
-postnominals:
-  - PhD
-  - MIEEE
+  pronouns: ''
+postnominals: []
 status:
-  icon: "☕️"
-role: Senior AI Research Scientist
+  icon: ""
+role: Research Engineer
 bio: |
-  Alex Johnson is a Senior AI Research Scientist at Meta AI. His research
-  has been published in top conferences like NeurIPS and ICML, with over
-  10,000 citations. Alex is passionate about pushing the boundaries of AI
-  while ensuring ethical development.
-
+  I build systems that prove computation without revealing secrets. 
+  Currently developing ZisK, a high-performance zkVM. 
+  My research lives at the intersection of probabilistic proofs, algebra, and cryptographic protocols.
+  Always looking for elegant solutions to hard problems.
 affiliations:
-  - name: Meta AI
-    url: https://ai.meta.com/
+  - name: ZisK
+    url: https://zisk.technology/
 
 links:
-  - icon: at-symbol
-    url: mailto:alex.johnson@example.com
+  - icon: envelope
+    icon_pack: fas
+    url: mailto:lecter1729@gmail.com
     label: E-mail Me
   - icon: brands/x
-    url: https://x.com/example
+    url: https://twitter.com/EllipticHector
+    label: Follow Me!
   - icon: brands/github
-    url: https://github.com/example
+    url: https://github.com/hecmas
+    label: Personal Projects
   - icon: brands/linkedin
-    url: https://www.linkedin.com/in/example/
+    url: https://www.linkedin.com/in/hector-masip-ardevol-1922b4188/
+    label: Hire Me!
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?user=example
-  - icon: academicons/orcid
-    url: https://orcid.org/0000-0002-1825-0097
+    url: https://scholar.google.co.uk/citations?user=WoocbSMAAAAJ&hl
 
 interests:
-  - Large Language Models
-  - Computer Vision
-  - Reinforcement Learning
-  - AI Ethics
+  - Algebra
+  - Cryptography
+  - Probabilistic Proofs
+  - Blockchain
+  - CTF Challenges
 
 education:
-  - degree: PhD Computer Science
-    institution: Stanford University
-    start: 2015-09-01
-    end: 2019-06-30
+  - degree: PhD Applied Cryptography
+    institution: Polytechnic University of Catalonia
+    start: 2021-09-01
+    end: 2023-06-01
+    summary: ''
+  - degree: MS Mathematics
+    institution: Polytechnic University of Catalonia
+    start: 2019-09-01
+    end: 2020-06-01
     summary: |
-      Thesis on scaling laws for neural language models. Published 5 papers in NeurIPS and ICML.
+      Thesis on linkable attribute-based signatures.
     button:
-      text: Download dissertation
-      url: /resume.pdf
+      text: Download my Master's Degree Final Project.
+      url: /uploads/TFM.pdf
       icon: hero/arrow-down-tray
-  - degree: MS Computer Science
-    institution: Carnegie Mellon University
-    start: 2013-09-01
-    end: 2015-05-31
-  - degree: BS Computer Science
-    institution: MIT
-    start: 2009-09-01
-    end: 2013-05-31
+  - degree: BS Mathematics
+    institution: University of Alicante
+    start: 2015-09-01
+    end: 2019-06-01
+    summary: |
+      Thesis on the subgraph isomorphism problem.
+    button:
+      text: Download my Bachelor's Degree Final Project.
+      url: /uploads/TFG.pdf
+      icon: hero/arrow-down-tray
 
 experience:
-  - role: Senior AI Research Scientist
-    org: Meta AI
-    start: 2020-01-01
+  - role: Research Engineer
+    org: ZisK
+    start: 2025-06-01
     summary: |
-      Leading research on multimodal AI systems. Contributed to Llama 2 and other open-source models.
+      Building a high-performant zkVM.
     button:
       text: View portfolio
-      url: /
+      url: https://github.com/hecmas
       icon: hero/arrow-down-tray
-  - role: AI Research Intern
-    org: OpenAI
-    start: 2019-06-01
-    end: 2019-12-31
+  - role: Research Engineer
+    org: Polygon Labs
+    start: 2023-05-01
+    end: 2025-06-01
     summary: |
-      Worked on GPT-3 scaling. Co-authored paper on prompt engineering.
+      Contributed to the Polygon zkEVM arithmetization using eAIR and the proving system combining eSTARK with fflonK. 
+    button:
+      text: View portfolio
+      url: https://github.com/hecmas
+      icon: hero/arrow-down-tray
 
-skills:
-  - name: Technical Skills
-    items:
-      - label: Python
-        level: 5
-      - label: Machine Learning
-        level: 5
-      - label: Cloud Computing
-        level: 4
-  - name: Research & Communication
-    items:
-      - label: Academic Writing
-        level: 5
-      - label: Conference Presentations
-        level: 4
-      - label: Grant Proposals
-        level: 4
+# skills:
+#   - name: Technical Skills
+#     items:
+#       - label: Python
+#         level: 5
+#       - label: Machine Learning
+#         level: 5
+#       - label: Cloud Computing
+#         level: 4
+#   - name: Research & Communication
+#     items:
+#       - label: Academic Writing
+#         level: 5
+#       - label: Conference Presentations
+#         level: 4
+#       - label: Grant Proposals
+#         level: 4
 
 languages:
-  - name: English
+  - name: Spanish
     level: 5
     label: Native
-  - name: Spanish
+  - name: English
     level: 4
     label: Fluent
 
-awards:
-  - title: Best Paper Award
-    awarder: NeurIPS
-    date: "2022-12-01"
-    summary: Awarded for groundbreaking work on efficient training of large models.
-    icon: hero/trophy
+# awards:
+#   - title: Best Paper Award
+#     awarder: NeurIPS
+#     date: "2022-12-01"
+#     summary: Awarded for groundbreaking work on efficient training of large models.
+#     icon: hero/trophy

@@ -14,10 +14,10 @@ main:
     url: /post/
     weight: 30
   - name: Publications
-    url: /#publications
+    url: /publications
     weight: 40
   - name: Talks
-    url: /#talks
+    url: /events
     weight: 50
   - name: Resume
     url: uploads/resume.pdf

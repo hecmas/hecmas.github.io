@@ -32,6 +32,9 @@ links:
   - icon: brands/github
     url: https://github.com/hecmas
     label: Personal Projects
+  - icon: custom/hackmd
+    url: https://hackmd.io/@Wimet
+    label: Posts
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/hector-masip-ardevol-1922b4188/
     label: Hire Me!

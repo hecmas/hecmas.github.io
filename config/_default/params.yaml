@@ -191,7 +191,7 @@ hugoblox:
       category_id: "DIC_kwDOQ1eG8M4C1HT_"
 
       # Optional Customization:
-      mapping: 'title'      # pathname (default) | url | title | og:title
+      mapping: 'og:title'      # pathname (default) | url | title | og:title
       theme: 'light'           # light | dark | transparent_dark | preferred_color_scheme
       language_code: 'en'      # defaults to 'en'
     # disqus:

@@ -5,9 +5,9 @@ name:
   display: Héctor Masip Ardevol
   given: Héctor
   family: Masip Ardevol
-  alternate: ''  # Example: 王伟
-  pronunciation: ''  # Example: Wáng Wěi
-  pronouns: ''
+  alternate: "" # Example: 王伟
+  pronunciation: "" # Example: Wáng Wěi
+  pronouns: ""
 postnominals: []
 status:
   icon: ""
@@ -19,27 +19,27 @@ bio: |
   Always looking for elegant solutions to hard problems.
 affiliations:
   - name: ZisK
-    url: https://zisk.technology/
+    url: "https://zisk.technology/"
 
 links:
   - icon: envelope
     icon_pack: fas
-    url: mailto:lecter1729@gmail.com
+    url: "mailto:lecter1729@gmail.com"
     label: E-mail Me
   - icon: brands/x
-    url: https://twitter.com/EllipticHector
+    url: "https://twitter.com/EllipticHector"
     label: Follow Me!
   - icon: brands/github
-    url: https://github.com/hecmas
+    url: "https://github.com/hecmas"
     label: Personal Projects
   - icon: custom/hackmd
-    url: https://hackmd.io/@Wimet
+    url: "https://hackmd.io/@Wimet"
     label: Posts
   - icon: brands/linkedin
-    url: https://www.linkedin.com/in/hector-masip-ardevol-1922b4188/
+    url: "https://www.linkedin.com/in/hector-masip-ardevol-1922b4188/"
     label: Hire Me!
   - icon: academicons/google-scholar
-    url: https://scholar.google.co.uk/citations?user=WoocbSMAAAAJ&hl
+    url: "https://scholar.google.co.uk/citations?user=WoocbSMAAAAJ&hl"
 
 interests:
   - Algebra
@@ -53,7 +53,7 @@ education:
     institution: Polytechnic University of Catalonia
     start: 2021-09-01
     end: 2023-06-01
-    summary: ''
+    summary: ""
   - degree: MS Mathematics
     institution: Polytechnic University of Catalonia
     start: 2019-09-01
@@ -61,7 +61,7 @@ education:
     summary: |
       Thesis on linkable attribute-based signatures.
     button:
-      text: Download my Master's Degree Final Project.
+      text: "Download my Master's Degree Final Project."
       url: /uploads/TFM.pdf
       icon: hero/arrow-down-tray
   - degree: BS Mathematics
@@ -71,7 +71,7 @@ education:
     summary: |
       Thesis on the subgraph isomorphism problem.
     button:
-      text: Download my Bachelor's Degree Final Project.
+      text: "Download my Bachelor's Degree Final Project."
       url: /uploads/TFG.pdf
       icon: hero/arrow-down-tray
 
@@ -83,17 +83,17 @@ experience:
       Building a high-performant zkVM.
     button:
       text: View portfolio
-      url: https://github.com/hecmas
+      url: "https://github.com/hecmas"
       icon: hero/arrow-down-tray
   - role: Research Engineer
     org: Polygon Labs
     start: 2023-05-01
     end: 2025-06-01
     summary: |
-      Contributed to the Polygon zkEVM arithmetization using eAIR and the proving system combining eSTARK with fflonK. 
+      Contributed to the Polygon zkEVM arithmetization using eAIR and the proving system combining eSTARK with fflonK.
     button:
       text: View portfolio
-      url: https://github.com/hecmas
+      url: "https://github.com/hecmas"
       icon: hero/arrow-down-tray
 
 # skills:

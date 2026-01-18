@@ -30,10 +30,10 @@ summary: ""
 tags: []
 
 links:
-- type: preprint
-  provider: eprint
-  id: 2022/086
-  url: https://eprint.iacr.org/2022/086.pdf
+  - type: preprint
+    provider: eprint
+    id: 2022/086
+    url: "https://eprint.iacr.org/2022/086.pdf"
 # - type: code
 #   url: https://github.com/HugoBlox/kit
 # - type: slides
@@ -51,9 +51,9 @@ links:
 #   url: http://example.org
 
 # Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
+# To use, add an image named `featured.jpg/png` to your page's folder.
 image:
-  caption: ''
+  caption: ""
   focal_point: ""
   preview_only: false
 
@@ -70,6 +70,7 @@ projects: []
 #   E.g. `slides: "example"` references `content/slides/example/index.md`.
 #   Otherwise, set `slides: ""`.
 slides: ""
+
 ---
 
 <!-- This work is driven by the results in my [previous paper](/publications/conference-paper/) on LLMs.

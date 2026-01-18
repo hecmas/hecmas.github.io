@@ -35,7 +35,7 @@ tags: []
 
 links:
   - type: link
-    url: https://link.springer.com/article/10.1007/s10623-024-01457-z
+    url: "https://link.springer.com/article/10.1007/s10623-024-01457-z"
   # - type: pdf
   #   url: http://arxiv.org/pdf/1512.04133v1
   # - type: code
@@ -54,9 +54,9 @@ links:
   #   url: ""
 
 # Featured image
-# To use, add an image named `featured.jpg/png` to your page's folder. 
+# To use, add an image named `featured.jpg/png` to your page's folder.
 image:
-  caption: ''
+  caption: ""
   focal_point: ""
   preview_only: false
 
@@ -73,6 +73,7 @@ projects: []
 #   E.g. `slides: "example"` references `content/slides/example/index.md`.
 #   Otherwise, set `slides: ""`.
 slides: ""
+
 ---
 
 <!-- > [!NOTE]

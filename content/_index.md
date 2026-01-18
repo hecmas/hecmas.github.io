@@ -1,28 +1,28 @@
 ---
 # Leave the homepage title empty to use the site title
-title: ''
-summary: ''
+title: ""
+summary: ""
 date: 2022-10-24
 type: landing
 
 design:
   # Default section spacing
-  spacing: '6rem'
+  spacing: "6rem"
 
 sections:
   - block: resume-biography-3
     content:
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: me
-      text: ''
+      text: ""
       # Show a call-to-action button under your biography? (optional)
       button:
         text: Download CV
         url: uploads/resume.pdf
       headings:
-        about: ''
-        education: ''
-        interests: ''
+        about: ""
+        education: ""
+        interests: ""
     design:
       # Use the new Gradient Mesh which automatically adapts to the selected theme colors
       background:
@@ -30,7 +30,7 @@ sections:
           enable: true
       # Reduce top spacing
       spacing:
-        padding: ['0rem', 0, 0, 0]  # top, right, bottom, left
+        padding: ["0rem", 0, 0, 0] # top, right, bottom, left
 
       # Name heading sizing to accommodate long or short names
       name:
@@ -43,8 +43,8 @@ sections:
 
   - block: markdown
     content:
-      title: '📚 About'
-      subtitle: ''
+      title: "📚 About"
+      subtitle: ""
       text: |-
         I am currently working as a Research Engineer at [ZisK](https://zisk.technology/), specializing in zero-knowledge cryptography and blockchain scalability. Previously, I worked at [Polygon zkEVM](https://github.com/0xPolygonHermez), where I contributed to developing robust arithmetization using the extended Algebraic Intermediate Representation (eAIR) and ensured the integrity of the proving system, a composition of inner [eSTARK](https://eprint.iacr.org/2023/474.pdf) with outer [fflonK](https://eprint.iacr.org/2021/1167).
 
@@ -52,7 +52,7 @@ sections:
 
         In my free time, I enjoy doing cryptography-based [CTF](https://en.wikipedia.org/wiki/Capture_the_flag_(cybersecurity)) challenges on sites like [CryptoHack](https://cryptohack.org/), [HackTheBox](https://www.hackthebox.com/) or [CryptoPals](https://cryptopals.com/). There is a big difference between theory-oriented (a.k.a., textbook) cryptography and real-world cryptography, so I feel like these challenges make me understand the link between these two worlds.
     design:
-      columns: '1'
+      columns: "1"
 
   # - block: collection
   #   id: papers
@@ -70,7 +70,7 @@ sections:
     id: publications
     content:
       title: Publications
-      text: ''
+      text: ""
       filters:
         folders:
           - publications
@@ -82,8 +82,8 @@ sections:
     id: talks
     content:
       title: Talks
-      subtitle: ''
-      text: ''
+      subtitle: ""
+      text: ""
       # Page type to display. E.g. post, talk, publication...
       # page_type: blog
       # Choose how many pages you would like to display (0 = all pages)
@@ -92,13 +92,13 @@ sections:
       filters:
         folders:
           - events
-        author: ''
-        category: ''
-        tag: ''
+        author: ""
+        category: ""
+        tag: ""
         exclude_featured: false
         exclude_future: false
         exclude_past: false
-        publication_type: ''
+        publication_type: ""
       # Choose how many pages you would like to offset by
       offset: 0
       # Page order: descending (desc) or ascending (asc) date.
@@ -130,4 +130,6 @@ sections:
   #       # Card background color (CSS class)
   #       css_class: 'bg-primary-300 dark:bg-primary-700'
   #       css_style: ''
+
 ---
+

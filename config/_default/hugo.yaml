@@ -4,9 +4,9 @@
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 # Website name (set in params.yaml under hugoblox.branding.name)
-title: ''
+title: ""
 # Website URL
-baseURL: 'https://hecmas.github.io/'
+baseURL: "https://hecmas.github.io/"
 
 ############################
 ## LANGUAGE
@@ -22,10 +22,12 @@ removePathAccents: true
 ############################
 
 cascade:
-  - _target:
-      path: /slides/**
-      kind: page
-    outputs: [HTML, present]
+  - target:
+      path: /post/**
+      # kind: page
+    params:
+      commentable: true
+    # outputs: [HTML, present]
 
 ############################
 ## ADVANCED

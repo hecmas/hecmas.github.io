@@ -26,10 +26,11 @@ const publications = defineCollection({
     authors: z.array(z.string()),
     date: z.coerce.date(),
     venue: z.string().optional(),
-    type: z.enum(['journal', 'conference', 'preprint', 'thesis']),
+    type: z.enum(['journal', 'conference', 'preprint', 'report', 'thesis']),
     abstract: z.string(),
     links: z.array(link).default([]),
     bibtex: z.string().optional(),
+    award: z.string().optional(),
     featured: z.boolean().default(false),
   }),
 });

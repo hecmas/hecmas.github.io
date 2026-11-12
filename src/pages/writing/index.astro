@@ -12,7 +12,7 @@ const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
   <div class="container narrow">
     <header class="page-head">
       <h1>Writing</h1>
-      <p>Notes on zero-knowledge proofs, cryptography and the math behind them. Some posts include interactive demos.</p>
+      <p>Notes on zero-knowledge proofs, cryptography and the math behind them.</p>
     </header>
     {posts.map((post) => <PostItem post={post} />)}
   </div>

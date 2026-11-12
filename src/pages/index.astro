@@ -11,7 +11,8 @@ import { profile, socials, work, interests } from '../data/site';
 
 const byDate = <T extends { data: { date: Date } }>(a: T, b: T) => b.data.date.valueOf() - a.data.date.valueOf();
 const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(byDate).slice(0, 3);
-const pubs = (await getCollection('publications')).sort(byDate);
+const allPubs = (await getCollection('publications')).sort(byDate);
+const pubs = allPubs.slice(0, 4);
 const talks = (await getCollection('talks')).sort(byDate).slice(0, 3);
 const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].includes(s.icon));
 ---
@@ -107,7 +108,7 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
   <section class="section container" id="publications">
     <div class="section-head">
       <h2>Publications</h2>
-      <a href="/publications/">Abstracts & BibTeX →</a>
+      <a href="/publications/">All {allPubs.length} publications →</a>
     </div>
     <div class="narrow">
       {pubs.map((pub) => <PublicationItem pub={pub} compact />)}

@@ -7,30 +7,43 @@ interface Props {
   compact?: boolean;
 }
 const { pub, compact = false } = Astro.props;
-const { title, authors, date, venue, type, abstract, links, bibtex } = pub.data;
-const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Preprint', thesis: 'Thesis' }[type];
+const { title, authors, date, venue, type, abstract, links, bibtex, award } = pub.data;
+const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Preprint', report: 'Report', thesis: 'Thesis' }[type];
 ---
 
-<article class="pub" id={pub.id}>
+<article class:list={['pub', { compact }]} id={pub.id}>
   <div class="pub-year meta">{year(date)}</div>
   <div class="pub-body">
     <h3>
       <a href={links[0]?.url ?? `#${pub.id}`}>{title}</a>
     </h3>
-    <p class="authors">
-      {
-        authorList(authors).map((a, i, all) => (
-          <>
-            <span class={a.me ? 'me' : undefined}>{a.name}</span>
-            {i < all.length - 1 ? ', ' : ''}
-          </>
-        ))
-      }
-    </p>
+    {
+      !compact && (
+        <p class="authors">
+          {authorList(authors).map((a, i, all) => (
+            <>
+              <span class={a.me ? 'me' : undefined}>{a.name}</span>
+              {i < all.length - 1 ? ', ' : ''}
+            </>
+          ))}
+        </p>
+      )
+    }
     <p class="venue meta">
       <span class="tag">{typeLabel}</span>
       {venue && <span>{venue}</span>}
     </p>
+    {
+      award && !compact && (
+        <p class="award">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="9" r="6" />
+            <path d="m8.5 14 -1.5 8 5-3 5 3-1.5-8" />
+          </svg>
+          <span>{award}</span>
+        </p>
+      )
+    }
     {
       !compact && (
         <div class="pub-actions">
@@ -105,6 +118,12 @@ const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Pre
     padding-block: 1.25rem;
     border-top: 1px solid var(--border);
   }
+  .pub.compact {
+    padding-block: 0.9rem;
+  }
+  .pub.compact h3 {
+    font-size: 1.2rem;
+  }
   .pub:first-child {
     border-top: 0;
     padding-top: 0;
@@ -133,6 +152,18 @@ const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Pre
     gap: 0.6rem;
     flex-wrap: wrap;
     margin: 0.4rem 0 0;
+  }
+  .award {
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-start;
+    margin: 0.45rem 0 0;
+    font-size: 0.875rem;
+  }
+  .award svg {
+    flex: none;
+    margin-top: 0.25rem;
+    color: var(--accent);
   }
   .pub-actions {
     display: flex;

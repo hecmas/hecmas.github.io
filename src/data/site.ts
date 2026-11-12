@@ -48,6 +48,18 @@ export const work: {
     links: [{ label: 'zisk.technology', url: 'https://zisk.technology/' }],
   },
   {
+    title: "Formal verification of ZisK's recursion",
+    period: '2026',
+    summary:
+      "A Lean 4 roadmap for formally verifying ZisK's recursive aggregation: specifying the STARK verifier in Lean, proving the verifier circuits sound, and showing that an accepted final proof yields valid, bus-balanced witnesses.",
+    tags: ['Formal verification', 'Lean 4', 'Recursion'],
+    links: [
+      { label: 'Talk', url: 'https://www.youtube.com/watch?v=BGoyF3ENHqU' },
+      { label: 'Slides', url: 'https://docs.google.com/presentation/d/1IwMU-3E9WNGIJ7Y5iyT1DJcYIFi7FX36wPrRIIuC3UA/edit' },
+      { label: 'Security paper', url: 'https://github.com/0xPolygonHermez/zisk-papers/blob/main/src/security/main.pdf' },
+    ],
+  },
+  {
     title: 'eSTARK',
     period: '2023',
     summary:
@@ -56,17 +68,6 @@ export const work: {
     links: [
       { label: 'Paper', url: 'https://eprint.iacr.org/2023/474' },
       { label: 'DCC journal', url: 'https://doi.org/10.1007/s10623-024-01457-z' },
-    ],
-  },
-  {
-    title: 'fflonK in the Polygon zkEVM',
-    period: '2023',
-    summary:
-      'A faster-prover variant of fflonK used as the final SNARK wrapper over recursive eSTARK proofs, making on-chain verification cheap.',
-    tags: ['SNARKs', 'KZG', 'Recursion'],
-    links: [
-      { label: 'Talk', url: 'https://www.youtube.com/watch?v=yPC8Eiyo5P4' },
-      { label: 'Slides', url: '/uploads/2023-fflonk-in-zkevm.pdf' },
     ],
   },
   {

@@ -11,4 +11,12 @@ abstract: >-
 links:
   - { label: ePrint, url: "https://eprint.iacr.org/2022/1050" }
   - { label: PDF, url: "https://eprint.iacr.org/2022/1050.pdf" }
+bibtex: |-
+  @misc{cryptoeprint:2022/1050,
+    author       = {Héctor Masip Ardevol and Jordi Baylina Melé and Daniel Lubarov and José L. Muñoz-Tapia},
+    title        = {{RapidUp}: Multi-Domain Permutation Protocol for Lookup Tables},
+    howpublished = {Cryptology {ePrint} Archive, Paper 2022/1050},
+    year         = {2022},
+    url          = {https://eprint.iacr.org/2022/1050}
+  }
 ---

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { isVisible } from '../lib/drafts';
 import Base from '../layouts/Base.astro';
 import SocialIcon from '../components/SocialIcon.astro';
 import PostItem from '../components/PostItem.astro';
@@ -10,7 +11,7 @@ import avatar from '../assets/me.png';
 import { profile, socials, work, interests } from '../data/site';
 
 const byDate = <T extends { data: { date: Date } }>(a: T, b: T) => b.data.date.valueOf() - a.data.date.valueOf();
-const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(byDate).slice(0, 3);
+const posts = (await getCollection('writing', isVisible)).sort(byDate).slice(0, 3);
 const allPubs = (await getCollection('publications')).sort(byDate);
 const pubs = allPubs.slice(0, 4);
 const talks = (await getCollection('talks')).sort(byDate).slice(0, 3);

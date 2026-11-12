@@ -6,14 +6,14 @@ interface Props {
   post: CollectionEntry<'writing'>;
 }
 const { post } = Astro.props;
-const { title, summary, date, tags } = post.data;
+const { title, summary, date, tags, draft } = post.data;
 ---
 
 <article class="post">
   <a href={`/writing/${post.id}/`}>
     <time class="meta" datetime={date.toISOString()}>{formatDate(date)}</time>
     <div>
-      <h3>{title}</h3>
+      <h3>{title}{draft && <span class="draft"> · draft</span>}</h3>
       <p>{summary}</p>
       {tags.length > 0 && (
         <ul class="tags">
@@ -43,6 +43,11 @@ const { title, summary, date, tags } = post.data;
   h3 {
     font-size: 1.3rem;
     transition: color 0.15s;
+  }
+  .draft {
+    font: 600 0.75rem var(--font-mono);
+    color: var(--accent);
+    vertical-align: middle;
   }
   .post a:hover h3 {
     color: var(--accent);

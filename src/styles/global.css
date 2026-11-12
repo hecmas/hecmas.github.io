@@ -313,6 +313,21 @@ button.chip:hover {
   text-align: left;
 }
 
+/* Embeds and highlights from imported HackMD notes */
+.prose .embed {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius);
+}
+.prose mark {
+  background: var(--accent-soft);
+  color: inherit;
+  padding: 0 0.15em;
+  border-radius: 3px;
+}
+
 /* Callouts: > [!NOTE] */
 .prose .callout {
   border: 1px solid var(--border);

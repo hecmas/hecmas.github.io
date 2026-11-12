@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
+import { isVisible } from '../../lib/drafts';
 import Base from '../../layouts/Base.astro';
 import PostItem from '../../components/PostItem.astro';
 
-const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+const posts = (await getCollection('writing', isVisible)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 ---

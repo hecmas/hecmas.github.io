@@ -33,8 +33,8 @@ importers:
         specifier: ^7.4.11
         version: 7.4.11(@astrojs/markdown-remark@7.3.8)(@types/node@24.19.2)(yaml@2.9.1)
       katex:
-        specifier: ^0.19.1
-        version: 0.19.1
+        specifier: ^0.16.47
+        version: 0.16.47
       rehype-katex:
         specifier: ^7.0.1
         version: 7.0.1
@@ -846,10 +846,6 @@ packages:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
 
-  commander@15.1.0:
-    resolution: {integrity: sha512-cgnQ88TRrWcC7pVq46RzJVRMktu3W2RcbnoidnfBsl1bmDCBwJS/udcIZpKoCrbAYYaCqsz1yZCVIgbIaU3ddQ==}
-    engines: {node: '>=22.12.0'}
-
   commander@8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
@@ -1156,10 +1152,6 @@ packages:
 
   katex@0.16.47:
     resolution: {integrity: sha512-Eeo8Ys1doU1z+x8AZsPpQu+p/QcZBI5PeOo7QGQdy2x2m0MU/hYagBbGOmXwr5KVbEfVuWv9LpnQWeehogurjg==}
-    hasBin: true
-
-  katex@0.19.1:
-    resolution: {integrity: sha512-jG8uKntjSEcm2EpQOh0XturpPuuC9r3Sq5HLHdsFdWZT27E672SF19QEi+of0/YeOy15lDgRhKvr5614uRrEfA==}
     hasBin: true
 
   kleur@4.1.5:
@@ -2963,8 +2955,6 @@ snapshots:
 
   commander@11.1.0: {}
 
-  commander@15.1.0: {}
-
   commander@8.3.0: {}
 
   common-ancestor-path@2.0.0: {}
@@ -3352,10 +3342,6 @@ snapshots:
   katex@0.16.47:
     dependencies:
       commander: 8.3.0
-
-  katex@0.19.1:
-    dependencies:
-      commander: 15.1.0
 
   kleur@4.1.5: {}
 

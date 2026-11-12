@@ -15,6 +15,7 @@ const writing = defineCollection({
       tags: z.array(z.string()).default([]),
       cover: image().optional(),
       draft: z.boolean().default(false),
+      hackmd: z.string().optional(), // source note, for re-importing
     }),
 });
 

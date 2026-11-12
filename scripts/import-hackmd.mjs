@@ -8,7 +8,7 @@
 // Public notes ("anyone with the link can read") work as-is. For private notes, create a token in
 // HackMD (Settings → API → Create API token) and put HACKMD_TOKEN=... in a .env file (gitignored).
 
-import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, access, readdir } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 
 const [url, slugArg] = process.argv.slice(2);
@@ -85,8 +85,22 @@ const h1 = md.match(/^[ \t]*#[ \t]+(.+?)[ \t]*$/m);
 const title = (meta.title || h1?.[1] || api?.title || 'Untitled').replace(/^"|"$/g, '');
 if (h1) md = md.replace(h1[0], '');
 
+// If this note was imported before, update that post (even if the title changed since).
+async function findExistingSlug() {
+  const root = 'src/content/writing';
+  for (const d of await readdir(root, { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const text = await readFile(join(root, d.name, 'index.md'), 'utf8').catch(() => '');
+    const m = text.match(/^hackmd:\s*"?([^"\n]+)"?\s*$/m);
+    if (m && m[1].trim() === noteUrl) return d.name;
+  }
+  return null;
+}
+const existingSlug = await findExistingSlug();
+
 const slug =
   slugArg ||
+  existingSlug ||
   title
     .normalize('NFKD')
     .replace(/[̀-ͯ]/g, '')
@@ -278,9 +292,28 @@ const file = join(dir, 'index.md');
 const exists = await access(file).then(() => true, () => false);
 const yaml = (s) => JSON.stringify(s);
 let front;
+let oldBody = '';
 if (exists) {
-  front = (await readFile(file, 'utf8')).match(/^---\n[\s\S]*?\n---\n/)?.[0];
+  const old = await readFile(file, 'utf8');
+  front = old.match(/^---\n[\s\S]*?\n---\n/)?.[0];
+  oldBody = old.slice(front?.length ?? 0).replace(/^\n/, '');
+  // Keep image descriptions added on the site when the note has none.
+  const oldAlts = new Map([...oldBody.matchAll(/!\[([^\]]+)\]\(([^)\s]+)\)/g)].map((m) => [m[2], m[1]]));
+  body = body.replace(/!\[\]\(([^)\s]+)\)/g, (all, src) => (oldAlts.has(src) ? `![${oldAlts.get(src)}](${src})` : all));
 }
+const changed = !exists || oldBody.trim() !== body.trim();
+
+if (exists && changed && front) {
+  // Record when the post last changed: HackMD's last edit if known, otherwise today.
+  const when = new Date(api?.lastChangedAt ?? Date.now()).toISOString().slice(0, 10);
+  const date = front.match(/^date:\s*(\S+)/m)?.[1];
+  if (when !== date) {
+    front = /^updated:/m.test(front)
+      ? front.replace(/^updated:.*$/m, `updated: ${when}`)
+      : front.replace(/^(date:.*)$/m, `$1\nupdated: ${when}`);
+  }
+}
+
 front ??= `---
 title: ${yaml(title)}
 summary: ${yaml(summary || 'TODO: write a one-sentence summary of what this post shows')}
@@ -290,9 +323,11 @@ draft: true
 hackmd: ${yaml(noteUrl)}
 ---
 `;
-await writeFile(file, `${front}\n${body}`);
+if (changed) await writeFile(file, `${front}\n${body}`);
 
-console.log(`${exists ? 'Updated' : 'Created'} ${file}${n ? ` (+${n} image${n > 1 ? 's' : ''})` : ''}`);
+// First line is machine-readable for `pnpm sync-hackmd`: Created | Updated | Unchanged.
+console.log(`${!exists ? 'Created' : changed ? 'Updated' : 'Unchanged'} ${file}${n ? ` (+${n} image${n > 1 ? 's' : ''})` : ''}`);
+if (process.env.HACKMD_QUIET) process.exit(0);
 console.log(`Preview: pnpm dev, then http://localhost:4321/writing/${slug}/ (drafts show in dev only)`);
 if (!exists) {
   console.log(summary ? 'Check the summary, date and tags; set draft: false to publish.'

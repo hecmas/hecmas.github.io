@@ -25,7 +25,7 @@ const toc = headings.filter((h) => h.depth <= 3);
       <p class="summary">{summary}</p>
       <p class="meta">
         <time datetime={date.toISOString()}>{formatDate(date, { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-        {[updated && `updated ${formatDate(updated)}`, `${readingTime(post.body)} min read`, tags.join(', ')]
+        {[updated && `updated ${formatDate(updated, { year: 'numeric', month: 'long', day: 'numeric' })}`, `${readingTime(post.body)} min read`, tags.join(', ')]
           .filter(Boolean)
           .map((part) => ` · ${part}`)
           .join('')}

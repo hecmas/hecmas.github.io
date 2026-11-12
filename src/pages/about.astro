@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { profile, experience, education, interests, languages } from '../data/site';
+import { profile, experience, education, teaching, interests, languages } from '../data/site';
 ---
 
 <Base title="About" description={`About ${profile.name}: experience, education and background.`}>
@@ -41,7 +41,7 @@ import { profile, experience, education, interests, languages } from '../data/si
           experience.map((e) => (
             <li>
               <p class="meta">
-                {e.start} — {e.end}
+                {e.start === e.end ? e.start : `${e.start} — ${e.end}`}
               </p>
               <h3>
                 {e.role}, <a href={e.url}>{e.org}</a>
@@ -62,7 +62,7 @@ import { profile, experience, education, interests, languages } from '../data/si
           education.map((e) => (
             <li>
               <p class="meta">
-                {e.start} — {e.end}
+                {e.start === e.end ? e.start : `${e.start} — ${e.end}`}
               </p>
               <h3>{e.degree}</h3>
               <p class="org">
@@ -77,6 +77,35 @@ import { profile, experience, education, interests, languages } from '../data/si
                   </>
                 )}
               </p>
+              {'award' in e && e.award && (
+                <p class="award">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="9" r="6" />
+                    <path d="m8.5 14 -1.5 8 5-3 5 3-1.5-8" />
+                  </svg>
+                  <span>{e.award}</span>
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Teaching</h2>
+      </div>
+      <ol class="timeline">
+        {
+          teaching.map((t) => (
+            <li>
+              <p class="meta">{t.years}</p>
+              <h3>{t.role}</h3>
+              <p class="org">
+                <a href={t.url}>{t.program}</a>
+              </p>
+              <p class="desc">{t.summary}</p>
             </li>
           ))
         }
@@ -163,6 +192,19 @@ import { profile, experience, education, interests, languages } from '../data/si
     margin: 0.35rem 0 0;
     color: var(--muted);
     font-size: 0.95rem;
+  }
+  .award {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-start;
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: var(--fg);
+  }
+  .award svg {
+    flex: none;
+    margin-top: 0.25rem;
+    color: var(--accent);
   }
   .facts {
     display: grid;

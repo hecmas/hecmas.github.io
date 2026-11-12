@@ -100,16 +100,49 @@ export const experience = [
     summary:
       'Polygon zkEVM: arithmetization with the extended AIR (eAIR), and the integrity of the proving system, a composition of an inner eSTARK with an outer fflonK.',
   },
+  {
+    role: 'Doctoral Researcher',
+    org: 'Polytechnic University of Catalonia (UPC)',
+    url: 'https://entel.upc.edu/en',
+    start: '2021',
+    end: '2023',
+    summary:
+      'Research on zero-knowledge proofs for blockchain scalability, with a focus on zkEVMs, in the Department of Network Engineering. Funded by the FI-SDUR 2021 grant (Generalitat de Catalunya).',
+  },
+  {
+    role: 'Research Staff Member',
+    org: 'Polytechnic University of Catalonia (UPC)',
+    url: 'https://www.upc.edu/en',
+    start: '2021',
+    end: '2021',
+    summary: 'Research member of the ARPASAT project.',
+  },
+  {
+    role: 'Research Collaborator',
+    org: 'Information Security Group (UPC) & Codegram',
+    url: 'https://www.upc.edu/en',
+    start: '2020',
+    end: '2020',
+    summary: 'Analysis, study and implementation of a post-quantum e-voting protocol.',
+  },
 ];
 
 export const education = [
   {
-    degree: 'Doctoral studies, Applied Cryptography',
+    degree: 'Doctoral Studies, Applied Cryptography',
     org: 'Polytechnic University of Catalonia (UPC)',
     url: 'https://entel.upc.edu/en',
     start: '2021',
     end: '2023',
     summary: 'Department of Network Engineering. Left the program before completing the degree.',
+  },
+  {
+    degree: 'Summer Residency',
+    org: '0xPARC',
+    url: 'https://0xparc.org/',
+    start: 'Summer 2022',
+    end: 'Summer 2022',
+    summary: 'Research residency on applied zero-knowledge cryptography in New York.',
   },
   {
     degree: 'MSc, Advanced Mathematics and Mathematical Engineering',
@@ -118,6 +151,8 @@ export const education = [
     start: '2019',
     end: '2020',
     summary: 'Thesis on linkable attribute-based signatures.',
+    award:
+      'Honorable Mention, Premio Leonardo Torres Quevedo 2020 en Criptología y Seguridad de la Información (cryptology and information security).',
     file: { label: 'Thesis (PDF)', url: '/uploads/TFM.pdf' },
   },
   {
@@ -128,6 +163,18 @@ export const education = [
     end: '2019',
     summary: 'Focus on discrete mathematics. Thesis on the subgraph isomorphism problem.',
     file: { label: 'Thesis (PDF)', url: '/uploads/TFG.pdf' },
+  },
+];
+
+export const teaching = [
+  {
+    role: 'Lecturer, Cryptography',
+    program: "Master's in Blockchain Technologies, UPC School",
+    // The program page is gone; this is an archived copy.
+    url: 'https://web.archive.org/web/20240724161932/https://www.talent.upc.edu/ing/estudis/formacio/curs/207700/blockchain-technologies/',
+    years: '2021, 2022',
+    summary:
+      'Face-to-face cryptography module: modular arithmetic, RSA and elliptic-curve cryptography, pairings and signatures (ECDSA, BLS), provable security, advanced signature schemes and zero-knowledge proofs, from Schnorr and Fiat–Shamir to zk-SNARKs.',
   },
 ];
 

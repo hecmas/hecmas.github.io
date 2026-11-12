@@ -33,3 +33,13 @@ Front-matter fields are validated by the schemas in `src/content.config.ts`, so 
 - Set `draft: true` to hide a post.
 
 Old Hugo URLs (`/post/...`, `/events`, `/experience`) redirect to their new locations (see `astro.config.mjs`).
+
+## License
+
+- **Code:** [MIT](LICENSE). This covers everything not listed below.
+- **Blog posts** in `src/content/writing/` (text, figures and demos):
+  [CC BY 4.0](src/content/writing/LICENSE), © Héctor Masip Ardevol. Reuse them freely with credit and a link
+  to the original.
+- **Not licensed (all rights reserved):** personal images (`src/assets/me.png`, `public/avatar.png`,
+  `public/favicon.png`), documents in `public/uploads/` (CV, theses, slides), and papers listed in
+  `src/content/publications/`, which remain under their publishers' and co-authors' terms.

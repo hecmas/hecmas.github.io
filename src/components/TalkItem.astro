@@ -7,7 +7,7 @@ interface Props {
   showAbstract?: boolean;
 }
 const { talk, showAbstract = false } = Astro.props;
-const { title, date, event, eventUrl, location, youtube, slides, abstract } = talk.data;
+const { title, date, event, eventUrl, location, coSpeakers = [], youtube, slides, abstract } = talk.data;
 const videoUrl = youtube ? `https://www.youtube.com/watch?v=${youtube}` : undefined;
 ---
 
@@ -27,6 +27,7 @@ const videoUrl = youtube ? `https://www.youtube.com/watch?v=${youtube}` : undefi
     <h3>{videoUrl ? <a href={videoUrl}>{title}</a> : title}</h3>
     <p class="event">
       {eventUrl ? <a href={eventUrl}>{event}</a> : event}
+      {coSpeakers.length > 0 && <span class="with"> · with {coSpeakers.join(', ')}</span>}
     </p>
     <ul class="chips">
       {videoUrl && <li><a class="chip" href={videoUrl}>Video ↗</a></li>}

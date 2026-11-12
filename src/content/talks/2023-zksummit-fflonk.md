@@ -5,7 +5,7 @@ event: zkSummit 9
 eventUrl: https://www.zksummit.com/
 location: Lisbon, Portugal
 youtube: yPC8Eiyo5P4
-slides: /uploads/fflonk.pdf
+slides: /uploads/2023-fflonk-in-zkevm.pdf
 abstract: >-
   PlonK is a zk-SNARK that is currently being widely adopted as the underlying proving system in numerous projects not
   only because it possesses a small proof size and verification time, but also because it does not require a specific

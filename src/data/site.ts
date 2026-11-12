@@ -66,7 +66,7 @@ export const work: {
     tags: ['SNARKs', 'KZG', 'Recursion'],
     links: [
       { label: 'Talk', url: 'https://www.youtube.com/watch?v=yPC8Eiyo5P4' },
-      { label: 'Slides', url: '/uploads/fflonk.pdf' },
+      { label: 'Slides', url: '/uploads/2023-fflonk-in-zkevm.pdf' },
     ],
   },
   {

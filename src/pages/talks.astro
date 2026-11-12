@@ -10,7 +10,7 @@ const talks = (await getCollection('talks')).sort((a, b) => b.data.date.valueOf(
   <div class="container">
     <header class="page-head">
       <h1>Talks</h1>
-      <p>Conference talks and workshops, with recordings and slides.</p>
+      <p>Conference talks and workshops.</p>
     </header>
     <div class="list">
       {talks.map((talk) => <TalkItem talk={talk} showAbstract />)}

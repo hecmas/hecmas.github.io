@@ -16,6 +16,9 @@ const writing = defineCollection({
       cover: image().optional(),
       draft: z.boolean().default(false),
       hackmd: z.string().optional(), // source note, for re-importing
+    }).refine((post) => post.draft || !post.summary.startsWith('TODO'), {
+      message: 'Write a real summary before publishing (set draft: true to keep it as a draft).',
+      path: ['summary'],
     }),
 });
 

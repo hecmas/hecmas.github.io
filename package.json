@@ -5,8 +5,8 @@
   "type": "module",
   "packageManager": "pnpm@10.14.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "astro dev --force",
+    "build": "astro build --force",
     "preview": "astro preview",
     "check": "astro check",
     "import-hackmd": "node scripts/import-hackmd.mjs"

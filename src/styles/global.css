@@ -300,6 +300,11 @@ button.chip:hover {
 }
 .prose img {
   border-radius: var(--radius);
+  /* Diagrams are often transparent PNGs with black lines: give them a light backing in dark mode too. */
+  background: #fff;
+  max-height: 36rem;
+  width: auto;
+  margin-inline: auto;
 }
 .prose table {
   border-collapse: collapse;

@@ -130,6 +130,56 @@ function nestInLists(text) {
   }
   return lines.join('\n');
 }
+// $$ fences sharing a line with content (`$$\begin{aligned}` … `\end{aligned}$$`): HackMD accepts
+// them, but remark-math treats text after an opening $$ as a label and drops it. Split them.
+md = md
+  .replace(/^([ \t>]*)\$\$([^$\n]*\S[^$\n]*)$/gm, '$1$$$$\n$1$2')
+  .replace(/^([ \t>]*)([^$\n]*[^\s>$][^$\n]*)\$\$[ \t]*$/gm, '$1$2\n$1$$$$');
+
+// HackMD renders math with MathJax, which accepts bare \begin{align}…\end{align} blocks without $$.
+// remark-math needs the $$ fences, so wrap any LaTeX environment that is not already inside math.
+export function wrapBareEnvs(text) {
+  const lines = text.split('\n');
+  const out = [];
+  let inFence = false;
+  let inMath = false;
+  let env = null; // { name, depth, prefix }
+  for (const line of lines) {
+    const m = line.match(/^([ \t>]*)(.*)$/);
+    const prefix = m[1];
+    const rest = m[2];
+    if (/^(```|~~~)/.test(rest) && !env) inFence = !inFence;
+    if (!inFence && !env && rest.trim() === '$$') inMath = !inMath;
+    if (!inFence && !inMath && !env) {
+      const open = rest.match(/^\\begin\{([a-zA-Z*]+)\}/);
+      if (open) {
+        env = { name: open[1], depth: 0, prefix };
+        out.push(prefix + '$$');
+      }
+    }
+    out.push(line);
+    if (env) {
+      const esc = env.name.replace('*', '\\*');
+      env.depth += (rest.match(new RegExp(`\\\\begin\\{${esc}\\}`, 'g')) || []).length;
+      env.depth -= (rest.match(new RegExp(`\\\\end\\{${esc}\\}`, 'g')) || []).length;
+      if (env.depth <= 0) {
+        out.push(env.prefix + '$$');
+        env = null;
+      }
+    }
+  }
+  return out.join('\n');
+}
+md = wrapBareEnvs(md);
+// Numbered environments (align, gather, equation) get equation numbers in KaTeX but not in HackMD.
+// Use their unnumbered equivalents so posts look like the notes.
+export const unnumber = (t) =>
+  t
+    .replace(/\\(begin|end)\{align\*?\}/g, '\\$1{aligned}')
+    .replace(/\\(begin|end)\{gather\*?\}/g, '\\$1{gathered}')
+    .replace(/\\(?:begin|end)\{equation\*?\}/g, '');
+md = unnumber(md);
+
 md = nestInLists(md);
 
 // ── Convert HackMD-specific syntax, outside code fences ──────────────────────
@@ -185,6 +235,8 @@ for (let line of md.split('\n')) {
     .replace(/\{%\s*(gist|vimeo|pdf|slideshare|speakerdeck)\s+(\S+)\s*%\}/g, (_, kind, ref) =>
       `[${kind}: ${ref}](${/^https?:/.test(ref) ? ref : `https://gist.github.com/${ref}`})`)
     .replace(/==([^=\n]+)==/g, '<mark>$1</mark>')
+    // HackMD heading anchors keep capitals (#Final-Exponentiation); the site's are lowercase.
+    .replace(/\]\(#([^)\s]+)\)/g, (_, a) => `](#${a.toLowerCase().replace(/[^\w-]/g, '')})`)
     .replace(/\$[^$\n]+\$/g, (m) => m.replace(/[’‘]/g, "'")); // KaTeX rejects typographic quotes
 
   out.push(prefix() + line);
@@ -210,20 +262,16 @@ for (const m of images) {
   }
 }
 
-// ── Summary: first real paragraph, as plain text ─────────────────────────────
-const firstPara =
-  body
-    .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .find((p) => p && !/^([#>|<`$-]|\d+\.|\*[^*])/.test(p)) ?? '';
-let summary = firstPara
-  .replace(/\$\$?[^$]*\$\$?/g, '')
-  .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-  .replace(/[*_`]/g, '')
-  .replace(/\s+/g, ' ')
-  .replace(/\s+([,.;:])/g, '$1')
-  .trim();
-if (summary.length > 200) summary = summary.slice(0, 200).replace(/\s+\S*$/, '') + '…';
+// Raw <img> tags pointing at local files are not bundled by Astro; use Markdown images instead.
+body = body.replace(/(?:<p[^>]*>\s*)?<img[^>]*?src="(\.\/[^"]+)"[^>]*?>(?:\s*<\/p>)?/g, (tag, src) => {
+  const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? '';
+  return `![${alt}](${src})`;
+});
+
+// ── Summary ───────────────────────────────────────────────────────────────────
+// A good summary says what the post shows, which the opening paragraph rarely does, so it is not
+// generated. Uses the note's HackMD description if set; otherwise a TODO that blocks publishing.
+const summary = (api?.description || meta.description || '').trim();
 
 // ── Write (keep edited front matter on re-import) ────────────────────────────
 const file = join(dir, 'index.md');
@@ -235,7 +283,7 @@ if (exists) {
 }
 front ??= `---
 title: ${yaml(title)}
-summary: ${yaml(summary || 'TODO: one-sentence summary')}
+summary: ${yaml(summary || 'TODO: write a one-sentence summary of what this post shows')}
 date: ${new Date(api?.createdAt ?? Date.now()).toISOString().slice(0, 10)}
 tags: [${(api?.tags?.length ? api.tags : (meta.tags || '').split(/[,\s]+/)).filter(Boolean).map(yaml).join(', ')}]
 draft: true
@@ -246,4 +294,8 @@ await writeFile(file, `${front}\n${body}`);
 
 console.log(`${exists ? 'Updated' : 'Created'} ${file}${n ? ` (+${n} image${n > 1 ? 's' : ''})` : ''}`);
 console.log(`Preview: pnpm dev, then http://localhost:4321/writing/${slug}/ (drafts show in dev only)`);
-if (!exists) console.log('Check the summary, date and tags; set draft: false to publish.');
+if (!exists) {
+  console.log(summary ? 'Check the summary, date and tags; set draft: false to publish.'
+    : 'Write the summary (it says TODO; the site refuses to publish it until you do), check date and tags,\nthen set draft: false to publish.');
+  console.log('New post: if `pnpm dev` is already running, restart it to pick the post up.');
+}

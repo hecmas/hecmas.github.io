@@ -94,7 +94,7 @@ export const experience = [
   {
     role: 'Research Engineer',
     org: 'Polygon Labs',
-    url: 'https://github.com/0xPolygonHermez',
+    url: 'https://polygon.technology/',
     start: 'May 2023',
     end: 'Jun 2025',
     summary:
@@ -104,12 +104,12 @@ export const experience = [
 
 export const education = [
   {
-    degree: 'PhD, Applied Cryptography',
+    degree: 'Doctoral studies, Applied Cryptography',
     org: 'Polytechnic University of Catalonia (UPC)',
     url: 'https://entel.upc.edu/en',
     start: '2021',
     end: '2023',
-    summary: 'Department of Network Engineering.',
+    summary: 'Department of Network Engineering. Left the program before completing the degree.',
   },
   {
     degree: 'MSc, Advanced Mathematics and Mathematical Engineering',
@@ -131,9 +131,10 @@ export const education = [
   },
 ];
 
-export const interests = ['Algebra', 'Cryptography', 'Probabilistic proofs', 'Blockchain scalability', 'CTF challenges'];
+export const interests = ['Math', 'Probabilistic Proofs', 'Formal Methods', 'Distributed Systems'];
 
 export const languages = [
   { name: 'Spanish', level: 'Native' },
+  { name: 'Catalan', level: 'Native' },
   { name: 'English', level: 'Fluent' },
 ];

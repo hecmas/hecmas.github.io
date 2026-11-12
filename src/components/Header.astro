@@ -7,7 +7,7 @@ const isActive = (href: string) => path === href || path.startsWith(href) || pat
 <header class="site-header">
   <div class="container bar">
     <a href="/" class="brand" aria-label="Home">
-      <span class="brand-mark" aria-hidden="true">hm</span>
+      <span class="brand-mark" aria-hidden="true">H</span>
       <span class="brand-name">{profile.name}</span>
     </a>
     <nav aria-label="Main">
@@ -21,7 +21,6 @@ const isActive = (href: string) => path === href || path.startsWith(href) || pat
             </li>
           ))
         }
-        <li><a href={profile.cv} class="cv">CV</a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
         <svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
@@ -83,8 +82,8 @@ const isActive = (href: string) => path === href || path.startsWith(href) || pat
     border-radius: 7px;
     background: var(--fg);
     color: var(--bg);
-    font: 600 0.75rem var(--font-mono);
-    letter-spacing: -0.02em;
+    font: 500 1.15rem/1 var(--font-serif);
+    padding-top: 0.1rem;
     flex: none;
   }
   .brand:hover .brand-mark {
@@ -167,9 +166,6 @@ const isActive = (href: string) => path === href || path.startsWith(href) || pat
     nav a {
       padding: 0.35rem 0.4rem;
       font-size: 0.82rem;
-    }
-    nav a.cv {
-      display: none;
     }
   }
 </style>

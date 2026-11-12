@@ -1,6 +1,6 @@
-# hecmas.github.io
+# Personal Website
 
-Personal site, built with [Astro](https://astro.build). Deployed to GitHub Pages on every push to `main`.
+Source for [hecmas.github.io](https://hecmas.github.io), built with [Astro](https://astro.build).
 
 ## Develop
 
@@ -23,16 +23,6 @@ pnpm check      # type-check .astro/.ts files
 | Colors, fonts, global styles | `src/styles/global.css` |
 
 Front-matter fields are validated by the schemas in `src/content.config.ts`, so a typo fails the build.
-
-## Writing posts
-
-- Math: `$inline$` and `$$display$$`, rendered with KaTeX at build time.
-- Callouts: GitHub-style `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`.
-- Interactive demos: name the post `index.mdx`, then import a component, for example
-  `src/components/demos/DegreeAdjustDemo.astro`.
-- Set `draft: true` to hide a post.
-
-Old Hugo URLs (`/post/...`, `/events`, `/experience`) redirect to their new locations (see `astro.config.mjs`).
 
 ## License
 

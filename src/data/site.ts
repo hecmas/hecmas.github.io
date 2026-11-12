@@ -25,9 +25,9 @@ export const socials: { label: string; url: string; icon: SocialIcon }[] = [
 ];
 
 export const nav = [
-  { label: 'Writing', href: '/writing/' },
   { label: 'Publications', href: '/publications/' },
   { label: 'Talks', href: '/talks/' },
+  { label: 'Writing', href: '/writing/' },
   { label: 'About', href: '/about/' },
 ];
 

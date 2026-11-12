@@ -95,16 +95,6 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
     </div>
   </section>
 
-  <section class="section container" id="writing">
-    <div class="section-head">
-      <h2>Writing</h2>
-      <a href="/writing/">All writing →</a>
-    </div>
-    <div class="narrow">
-      {posts.map((post) => <PostItem post={post} />)}
-    </div>
-  </section>
-
   <section class="section container" id="publications">
     <div class="section-head">
       <h2>Publications</h2>
@@ -122,6 +112,16 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
     </div>
     <div class="talks">
       {talks.map((talk) => <TalkItem talk={talk} />)}
+    </div>
+  </section>
+
+  <section class="section container" id="writing">
+    <div class="section-head">
+      <h2>Writing</h2>
+      <a href="/writing/">All writing →</a>
+    </div>
+    <div class="narrow">
+      {posts.map((post) => <PostItem post={post} />)}
     </div>
   </section>
 </Base>

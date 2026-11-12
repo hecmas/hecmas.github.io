@@ -1,0 +1,68 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/format';
+
+interface Props {
+  post: CollectionEntry<'writing'>;
+}
+const { post } = Astro.props;
+const { title, summary, date, tags } = post.data;
+---
+
+<article class="post">
+  <a href={`/writing/${post.id}/`}>
+    <time class="meta" datetime={date.toISOString()}>{formatDate(date)}</time>
+    <div>
+      <h3>{title}</h3>
+      <p>{summary}</p>
+      {tags.length > 0 && (
+        <ul class="tags">
+          {tags.map((t) => <li class="tag">{t}</li>)}
+        </ul>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .post a {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--border);
+    text-decoration: none;
+  }
+  .post:first-child a {
+    border-top: 0;
+    padding-top: 0;
+  }
+  time {
+    padding-top: 0.35rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+    transition: color 0.15s;
+  }
+  .post a:hover h3 {
+    color: var(--accent);
+  }
+  p {
+    margin: 0.3rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .tags {
+    display: flex;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+  }
+  @media (max-width: 560px) {
+    .post a {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

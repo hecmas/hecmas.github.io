@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TalkItem from '../components/TalkItem.astro';
+
+const talks = (await getCollection('talks')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title="Talks" description="Conference talks and workshops on zero-knowledge proofs.">
+  <div class="container">
+    <header class="page-head">
+      <h1>Talks</h1>
+      <p>Conference talks and workshops.</p>
+    </header>
+    <div class="list">
+      {talks.map((talk) => <TalkItem talk={talk} showAbstract />)}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .list {
+    display: grid;
+    gap: 2.25rem;
+    max-width: var(--wide);
+  }
+</style>

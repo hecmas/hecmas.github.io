@@ -1,0 +1,116 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/format';
+
+interface Props {
+  talk: CollectionEntry<'talks'>;
+  showAbstract?: boolean;
+}
+const { talk, showAbstract = false } = Astro.props;
+const { title, date, event, eventUrl, location, coSpeakers = [], youtube, slides, abstract } = talk.data;
+const videoUrl = youtube ? `https://www.youtube.com/watch?v=${youtube}` : undefined;
+---
+
+<article class="talk" id={talk.id}>
+  {
+    youtube && (
+      <a class="thumb" href={videoUrl} aria-label={`Watch “${title}” on YouTube`}>
+        <img src={`https://i.ytimg.com/vi/${youtube}/hqdefault.jpg`} alt="" loading="lazy" width="480" height="360" />
+        <span class="play" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+        </span>
+      </a>
+    )
+  }
+  <div class="talk-body">
+    <p class="meta">{formatDate(date, { year: 'numeric', month: 'short' })} · {location}</p>
+    <h3>{videoUrl ? <a href={videoUrl}>{title}</a> : title}</h3>
+    <p class="event">
+      {eventUrl ? <a href={eventUrl}>{event}</a> : event}
+      {coSpeakers.length > 0 && <span class="with"> · with {coSpeakers.join(', ')}</span>}
+    </p>
+    <ul class="chips">
+      {videoUrl && <li><a class="chip" href={videoUrl}>Video ↗</a></li>}
+      {slides && <li><a class="chip" href={slides}>Slides ↗</a></li>}
+    </ul>
+    {showAbstract && abstract && (
+      <details class="abs">
+        <summary>Abstract</summary>
+        {abstract.split(/\n\s*\n/).map((p) => <p>{p}</p>)}
+      </details>
+    )}
+  </div>
+</article>
+
+<style>
+  .talk {
+    display: grid;
+    grid-template-columns: 13rem 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .thumb {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .thumb:hover img {
+    transform: scale(1.03);
+  }
+  .play {
+    position: absolute;
+    inset: auto auto 0.5rem 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.65);
+    color: #fff;
+  }
+  .talk-body .meta {
+    margin: 0;
+  }
+  h3 {
+    font-size: 1.3rem;
+    margin-top: 0.2rem;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  .event {
+    margin: 0.2rem 0 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .abs {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .abs summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+  .abs p {
+    margin: 0.6rem 0 0;
+  }
+  @media (max-width: 560px) {
+    .talk {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+</style>

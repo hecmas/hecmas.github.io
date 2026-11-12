@@ -1,0 +1,234 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, experience, education, teaching, interests, languages } from '../data/site';
+---
+
+<Base title="About" description={`About ${profile.name}: experience, education and background.`}>
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>About</h1>
+    </header>
+
+    <div class="prose">
+      <p>
+        I'm a Research Engineer at <a href={profile.org.url}>ZisK</a>, working on zero-knowledge cryptography and
+        blockchain scalability. Previously I was at <a href="https://polygon.technology/">Polygon Labs</a>, where
+        I worked on the arithmetization of its zkEVM with the extended Algebraic Intermediate Representation (eAIR), and on the
+        integrity of the proving system, a composition of an inner <a href="https://eprint.iacr.org/2023/474">eSTARK</a> with an outer <a href="https://eprint.iacr.org/2021/1167">fflonK</a>.
+      </p>
+      <p>
+        I trained as a mathematician: a BSc in Mathematics at the{' '}
+        <a href="https://www.ua.es/en/">University of Alicante</a>, focused on discrete mathematics, and an MSc in
+        Advanced Mathematics and Mathematical Engineering at the{' '}
+        <a href="https://www.upc.edu/en">Polytechnic University of Catalonia (UPC)</a>. I then spent two years doing doctoral research in UPC's{' '}
+        <a href="https://entel.upc.edu/en">Department of Network Engineering</a>. My research ranges from theoretical and applied cryptography to probabilistic proofs, with a particular interest in
+        using zero-knowledge proofs to make blockchains and authentication systems scale.
+      </p>
+      <p>
+        In my free time I solve cryptography CTF challenges on <a href="https://cryptohack.org/">CryptoHack</a>,{' '}
+        <a href="https://www.hackthebox.com/">HackTheBox</a> and <a href="https://cryptopals.com/">CryptoPals</a>.
+        Textbook cryptography and real-world cryptography are far apart, and these challenges are how I connect the two.
+      </p>
+    </div>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Experience</h2>
+        <a href={profile.cv} class="meta">Full CV (PDF) ↓</a>
+      </div>
+      <ol class="timeline">
+        {
+          experience.map((e) => (
+            <li>
+              <p class="meta">
+                {e.start === e.end ? e.start : `${e.start} — ${e.end}`}
+              </p>
+              <h3>
+                {e.role}, <a href={e.url}>{e.org}</a>
+              </h3>
+              <p class="desc">{e.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Education</h2>
+      </div>
+      <ol class="timeline">
+        {
+          education.map((e) => (
+            <li>
+              <p class="meta">
+                {e.start === e.end ? e.start : `${e.start} — ${e.end}`}
+              </p>
+              <h3>{e.degree}</h3>
+              <p class="org">
+                <a href={e.url}>{e.org}</a>
+              </p>
+              <p class="desc">
+                {e.summary}
+                {e.file && (
+                  <>
+                    {' '}
+                    <a href={e.file.url}>{e.file.label} ↓</a>
+                  </>
+                )}
+              </p>
+              {'award' in e && e.award && (
+                <p class="award">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="9" r="6" />
+                    <path d="m8.5 14 -1.5 8 5-3 5 3-1.5-8" />
+                  </svg>
+                  <span>{e.award}</span>
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Teaching</h2>
+      </div>
+      <ol class="timeline">
+        {
+          teaching.map((t) => (
+            <li>
+              <p class="meta">{t.years}</p>
+              <h3>{t.role}</h3>
+              <p class="org">
+                <a href={t.url}>{t.program}</a>
+              </p>
+              <p class="desc">{t.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="block facts">
+      <div>
+        <h2>Interests</h2>
+        <ul class="chips">{interests.map((i) => <li class="tag">{i}</li>)}</ul>
+      </div>
+      <div>
+        <h2>Languages</h2>
+        <ul class="plain">
+          {
+            languages.map((l) => (
+              <li>
+                {l.name} <span class="meta">{l.level}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .block {
+    margin-top: 3.5rem;
+  }
+  .block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
+  }
+  .block-head a {
+    text-decoration: none;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.25rem;
+    border-left: 1px solid var(--border);
+  }
+  .timeline li {
+    position: relative;
+  }
+  .timeline li + li {
+    margin-top: 1.75rem;
+  }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.25rem - 4px);
+    top: 0.45rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--accent);
+  }
+  .timeline .meta {
+    margin: 0;
+  }
+  h3 {
+    font-size: 1.25rem;
+    margin-top: 0.15rem;
+  }
+  h3 a,
+  .org a {
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .org {
+    margin: 0.15rem 0 0;
+    font-size: 0.95rem;
+  }
+  .desc {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .award {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-start;
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: var(--fg);
+  }
+  .award svg {
+    flex: none;
+    margin-top: 0.25rem;
+    color: var(--accent);
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 2rem;
+  }
+  .facts h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.85rem;
+  }
+  .plain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .plain li + li {
+    margin-top: 0.35rem;
+  }
+  .plain .meta {
+    margin-left: 0.4rem;
+  }
+  @media (max-width: 560px) {
+    .facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

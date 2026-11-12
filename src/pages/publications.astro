@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { socials } from '../data/site';
+
+const pubs = (await getCollection('publications')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const scholar = socials.find((s) => s.icon === 'scholar');
+---
+
+<Base title="Publications" description="Papers on STARKs, PlonK and lookup arguments.">
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>Publications</h1>
+      <p>
+        Papers on proof systems and the arguments inside them. For citation counts, see{' '}
+        <a href={scholar?.url}>Google Scholar</a>.
+      </p>
+    </header>
+    {pubs.map((pub) => <PublicationItem pub={pub} />)}
+  </div>
+</Base>

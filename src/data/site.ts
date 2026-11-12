@@ -1,0 +1,188 @@
+// Everything about *you* lives here: profile, links, CV entries and selected work.
+// Edit this file to update the homepage and the About page.
+
+export const profile = {
+  name: 'Héctor Masip Ardevol',
+  shortName: 'Héctor Masip',
+  role: 'Research Engineer',
+  org: { name: 'ZisK', url: 'https://zisk.technology/' },
+  tagline: 'I build systems that prove computation without revealing secrets.',
+  description:
+    'Research engineer working on zero-knowledge proofs. Currently building ZisK, a high-performance zkVM. Previously Polygon zkEVM (eSTARK, fflonK).',
+  email: 'lecter1729@gmail.com',
+  cv: '/uploads/resume.pdf',
+};
+
+export type SocialIcon = 'email' | 'github' | 'x' | 'scholar' | 'linkedin' | 'hackmd';
+
+export const socials: { label: string; url: string; icon: SocialIcon }[] = [
+  { label: 'GitHub', url: 'https://github.com/hecmas', icon: 'github' },
+  { label: 'Google Scholar', url: 'https://scholar.google.co.uk/citations?user=WoocbSMAAAAJ&hl', icon: 'scholar' },
+  { label: 'X', url: 'https://twitter.com/EllipticHector', icon: 'x' },
+  { label: 'HackMD', url: 'https://hackmd.io/@Wimet', icon: 'hackmd' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/hector-masip-ardevol-1922b4188/', icon: 'linkedin' },
+  { label: 'Email', url: 'mailto:lecter1729@gmail.com', icon: 'email' },
+];
+
+export const nav = [
+  { label: 'Publications', href: '/publications/' },
+  { label: 'Talks', href: '/talks/' },
+  { label: 'Writing', href: '/writing/' },
+  { label: 'About', href: '/about/' },
+];
+
+// "Selected work" on the homepage. Lead with what you built and what your part was.
+export const work: {
+  title: string;
+  period: string;
+  summary: string;
+  tags: string[];
+  links: { label: string; url: string }[];
+}[] = [
+  {
+    title: 'ZisK zkVM',
+    period: '2025 — now',
+    summary:
+      'Research engineer on ZisK, a high-performance zero-knowledge virtual machine for proving arbitrary programs.',
+    tags: ['zkVM', 'STARKs', 'Rust'],
+    links: [{ label: 'zisk.technology', url: 'https://zisk.technology/' }],
+  },
+  {
+    title: "Formal verification of ZisK's recursion",
+    period: '2026',
+    summary:
+      "A Lean 4 roadmap for formally verifying ZisK's recursive aggregation: specifying the STARK verifier in Lean, proving the verifier circuits sound, and showing that an accepted final proof yields valid, bus-balanced witnesses.",
+    tags: ['Formal verification', 'Lean 4', 'Recursion'],
+    links: [
+      { label: 'Talk', url: 'https://www.youtube.com/watch?v=BGoyF3ENHqU' },
+      { label: 'Slides', url: 'https://docs.google.com/presentation/d/1IwMU-3E9WNGIJ7Y5iyT1DJcYIFi7FX36wPrRIIuC3UA/edit' },
+      { label: 'Security paper', url: 'https://github.com/0xPolygonHermez/zisk-papers/blob/main/src/security/main.pdf' },
+    ],
+  },
+  {
+    title: 'eSTARK',
+    period: '2023',
+    summary:
+      'Generalized STARKs with the eAIR intermediate representation and three built-in arguments. The core proving system of the Polygon zkEVM prover.',
+    tags: ['STARKs', 'Arithmetization', 'Polynomial IOPs'],
+    links: [
+      { label: 'Paper', url: 'https://eprint.iacr.org/2023/474' },
+      { label: 'DCC journal', url: 'https://doi.org/10.1007/s10623-024-01457-z' },
+    ],
+  },
+  {
+    title: 'Lookup arguments: PlonKup & RapidUp',
+    period: '2022',
+    summary:
+      'PlonKup integrates plookup into PlonK. RapidUp extends lookups across multiple domains with a selector-based permutation protocol.',
+    tags: ['Lookups', 'PlonK'],
+    links: [
+      { label: 'PlonKup', url: 'https://eprint.iacr.org/2022/086' },
+      { label: 'RapidUp', url: 'https://eprint.iacr.org/2022/1050' },
+    ],
+  },
+];
+
+export const experience = [
+  {
+    role: 'Research Engineer',
+    org: 'ZisK',
+    url: 'https://zisk.technology/',
+    start: 'Jun 2025',
+    end: 'Present',
+    summary: 'Building a high-performance zkVM.',
+  },
+  {
+    role: 'Research Engineer',
+    org: 'Polygon Labs',
+    url: 'https://polygon.technology/',
+    start: 'May 2023',
+    end: 'Jun 2025',
+    summary:
+      'Polygon zkEVM: arithmetization with the extended AIR (eAIR), and the integrity of the proving system, a composition of an inner eSTARK with an outer fflonK.',
+  },
+  {
+    role: 'Doctoral Researcher',
+    org: 'Polytechnic University of Catalonia (UPC)',
+    url: 'https://entel.upc.edu/en',
+    start: '2021',
+    end: '2023',
+    summary:
+      'Research on zero-knowledge proofs for blockchain scalability, with a focus on zkEVMs, in the Department of Network Engineering. Funded by the FI-SDUR 2021 grant (Generalitat de Catalunya).',
+  },
+  {
+    role: 'Research Staff Member',
+    org: 'Polytechnic University of Catalonia (UPC)',
+    url: 'https://www.upc.edu/en',
+    start: '2021',
+    end: '2021',
+    summary: 'Research member of the ARPASAT project.',
+  },
+  {
+    role: 'Research Collaborator',
+    org: 'Information Security Group (UPC) & Codegram',
+    url: 'https://www.upc.edu/en',
+    start: '2020',
+    end: '2020',
+    summary: 'Analysis, study and implementation of a post-quantum e-voting protocol.',
+  },
+];
+
+export const education = [
+  {
+    degree: 'Doctoral Studies, Applied Cryptography',
+    org: 'Polytechnic University of Catalonia (UPC)',
+    url: 'https://entel.upc.edu/en',
+    start: '2021',
+    end: '2023',
+    summary: 'Department of Network Engineering. Left the program before completing the degree.',
+  },
+  {
+    degree: 'Summer Residency',
+    org: '0xPARC',
+    url: 'https://0xparc.org/',
+    start: 'Summer 2022',
+    end: 'Summer 2022',
+    summary: 'Research residency on applied zero-knowledge cryptography in New York.',
+  },
+  {
+    degree: 'MSc, Advanced Mathematics and Mathematical Engineering',
+    org: 'Polytechnic University of Catalonia (UPC)',
+    url: 'https://mamme.masters.upc.edu/en/',
+    start: '2019',
+    end: '2020',
+    summary: 'Thesis on linkable attribute-based signatures.',
+    award:
+      'Honorable Mention, Premio Leonardo Torres Quevedo 2020 en Criptología y Seguridad de la Información (cryptology and information security).',
+    file: { label: 'Thesis (PDF)', url: '/uploads/TFM.pdf' },
+  },
+  {
+    degree: 'BSc, Mathematics',
+    org: 'University of Alicante',
+    url: 'https://web.ua.es/en/grados/grado-en-matematicas/undergraduate-degree-in-mathematics.html',
+    start: '2015',
+    end: '2019',
+    summary: 'Focus on discrete mathematics. Thesis on the subgraph isomorphism problem.',
+    file: { label: 'Thesis (PDF)', url: '/uploads/TFG.pdf' },
+  },
+];
+
+export const teaching = [
+  {
+    role: 'Lecturer, Cryptography',
+    program: "Master's in Blockchain Technologies, UPC School",
+    // The program page is gone; this is an archived copy.
+    url: 'https://web.archive.org/web/20240724161932/https://www.talent.upc.edu/ing/estudis/formacio/curs/207700/blockchain-technologies/',
+    years: '2021, 2022',
+    summary:
+      'Face-to-face cryptography module: modular arithmetic, RSA and elliptic-curve cryptography, pairings and signatures (ECDSA, BLS), provable security, advanced signature schemes and zero-knowledge proofs, from Schnorr and Fiat–Shamir to zk-SNARKs.',
+  },
+];
+
+export const interests = ['Math', 'Probabilistic Proofs', 'Formal Methods', 'Distributed Systems'];
+
+export const languages = [
+  { name: 'Spanish', level: 'Native' },
+  { name: 'Catalan', level: 'Native' },
+  { name: 'English', level: 'Fluent' },
+];

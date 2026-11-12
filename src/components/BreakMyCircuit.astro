@@ -1,0 +1,577 @@
+---
+// "Break my circuit": a small puzzle where the visitor plays a malicious prover
+// against deliberately under-constrained Circom templates. Logic lives in src/lib/circuits.ts.
+---
+
+<div class="bmc" data-bmc>
+  <div class="bmc-tabs" role="tablist" aria-label="Levels" data-tabs></div>
+
+  <div class="bmc-grid">
+    <div class="bmc-code">
+      <div class="bmc-code-head">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="bmc-file" data-file>circuit.circom</span>
+      </div>
+      <pre><code data-code></code></pre>
+    </div>
+
+    <div class="bmc-panel">
+      <p class="bmc-goal" data-goal></p>
+
+      <div class="bmc-signals">
+        <div>
+          <p class="eyebrow">Public (verifier sees)</p>
+          <div class="bmc-rows" data-publics></div>
+        </div>
+        <div>
+          <p class="eyebrow">Witness (you choose)</p>
+          <div class="bmc-rows" data-witness></div>
+        </div>
+      </div>
+
+      <p class="eyebrow">Constraints <span class="bmc-mod">· everything mod 97</span></p>
+      <ul class="bmc-constraints" data-constraints></ul>
+
+      <div class="bmc-actions">
+        <button type="button" class="bmc-btn primary" data-submit>Submit proof</button>
+        <button type="button" class="bmc-btn" data-honest hidden>Fill x2, x3 honestly</button>
+        <button type="button" class="bmc-btn" data-patch hidden>Patch the circuit</button>
+        <button type="button" class="bmc-btn" data-next hidden>Next level →</button>
+      </div>
+
+      <div class="bmc-verdict" data-verdict aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="bmc-confetti" data-confetti aria-hidden="true"></div>
+  <noscript><p class="bmc-noscript">This puzzle needs JavaScript.</p></noscript>
+</div>
+
+<script>
+  import { levels, check, type Level, type Values } from '../lib/circuits';
+
+  const STORE = 'bmc-solved';
+  const loadSolved = (): Set<string> => {
+    try {
+      return new Set(JSON.parse(localStorage.getItem(STORE) ?? '[]'));
+    } catch {
+      return new Set();
+    }
+  };
+  const saveSolved = (s: Set<string>) => {
+    try {
+      localStorage.setItem(STORE, JSON.stringify([...s]));
+    } catch {}
+  };
+
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // Tiny Circom highlighter: comments, keywords, operators, numbers.
+  function highlight(line: string): string {
+    const i = line.indexOf('//');
+    const code = i >= 0 ? line.slice(0, i) : line;
+    const comment = i >= 0 ? line.slice(i) : '';
+    const tokens = /(<==|===|<--)|\b(template|signal|input|output)\b|\b(\d+)\b/g;
+    const body = esc(code).replace(tokens, (m, op, kw, num) =>
+      op ? `<span class="t-op">${m}</span>` : kw ? `<span class="t-kw">${m}</span>` : `<span class="t-num">${m}</span>`,
+    );
+    return body + (comment ? `<span class="t-com">${esc(comment)}</span>` : '');
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-bmc]').forEach((root) => {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const tabsEl = $('[data-tabs]');
+    const codeEl = $('[data-code]');
+    const goalEl = $('[data-goal]');
+    const pubEl = $('[data-publics]');
+    const witEl = $('[data-witness]');
+    const consEl = $('[data-constraints]');
+    const verdictEl = $('[data-verdict]');
+    const fileEl = $('[data-file]');
+    const btnSubmit = $<HTMLButtonElement>('[data-submit]');
+    const btnHonest = $<HTMLButtonElement>('[data-honest]');
+    const btnPatch = $<HTMLButtonElement>('[data-patch]');
+    const btnNext = $<HTMLButtonElement>('[data-next]');
+    const confetti = $('[data-confetti]');
+
+    const solved = loadSolved();
+    let idx = 0;
+    let patched = false;
+    let values: Values = {};
+
+    const level = (): Level => levels[idx];
+    const active = () => (patched ? [...level().constraints, ...level().missing] : level().constraints);
+
+    function renderTabs() {
+      tabsEl.innerHTML = levels
+        .map(
+          (l, i) =>
+            `<button type="button" role="tab" aria-selected="${i === idx}" data-tab="${i}">
+              <span class="n">${i + 1}</span>${esc(l.tab)}${solved.has(l.id) ? '<span class="ok" aria-label="solved">✓</span>' : ''}
+            </button>`,
+        )
+        .join('');
+    }
+
+    function renderCode() {
+      codeEl.innerHTML = level()
+        .code.map((ln) => {
+          const removed = ln.missing && !patched;
+          const text = removed ? `    // ${ln.text.trim()}   ← deleted in a "cleanup" PR` : ln.text;
+          const cls = ['ln', ln.cid ? 'has-c' : '', ln.missing && patched ? 'added' : '', removed ? 'removed' : '']
+            .filter(Boolean)
+            .join(' ');
+          return `<span class="${cls}"${ln.cid && !removed ? ` data-cid="${ln.cid}"` : ''}>${removed ? `<span class="t-com">${esc(text)}</span>` : highlight(text)}</span>`;
+        })
+        .join('');
+      fileEl.textContent = `${level().id}.circom`;
+    }
+
+    function signalRow(name: string, label: string, value: number, editable: boolean) {
+      return `<label class="bmc-row${editable ? '' : ' locked'}">
+        <span class="name">${esc(label)}</span>
+        ${
+          editable
+            ? `<input type="number" inputmode="numeric" value="${value}" data-sig="${name}" aria-label="${esc(label)}" />`
+            : `<span class="val">${value}</span><span class="lock" aria-label="fixed by the verifier">🔒</span>`
+        }
+      </label>`;
+    }
+
+    function renderSignals() {
+      const l = level();
+      pubEl.innerHTML = l.publics.map((s) => signalRow(s.name, s.label, s.value, false)).join('');
+      witEl.innerHTML = l.witness.map((s) => signalRow(s.name, s.label, values[s.name], true)).join('');
+      witEl.querySelectorAll<HTMLInputElement>('input[data-sig]').forEach((inp) =>
+        inp.addEventListener('input', () => {
+          values[inp.dataset.sig!] = Math.trunc(Number(inp.value) || 0);
+          verdictEl.innerHTML = '';
+          renderConstraints();
+        }),
+      );
+    }
+
+    function renderConstraints() {
+      const results = active().map((c) => ({ c, r: check(c, values) }));
+      consEl.innerHTML = results
+        .map(
+          ({ c, r }) => `<li class="${r.ok ? 'ok' : 'bad'}${level().missing.includes(c) ? ' restored' : ''}">
+            <span class="mark" aria-hidden="true">${r.ok ? '✓' : '✗'}</span>
+            <code>${esc(c.text)}</code>
+            <span class="vals">${r.lhs} ${r.ok ? '=' : '≠'} ${r.rhs}</span>
+          </li>`,
+        )
+        .join('');
+      const status = new Map(results.map(({ c, r }) => [c.id, r.ok]));
+      codeEl.querySelectorAll<HTMLElement>('[data-cid]').forEach((el) => {
+        el.classList.toggle('ok', status.get(el.dataset.cid!) === true);
+        el.classList.toggle('bad', status.get(el.dataset.cid!) === false);
+      });
+    }
+
+    function load(i: number) {
+      idx = i;
+      patched = false;
+      const l = level();
+      values = {};
+      l.publics.forEach((s) => (values[s.name] = s.value));
+      l.witness.forEach((s) => (values[s.name] = s.value));
+      goalEl.textContent = l.goal;
+      btnHonest.hidden = !l.honest;
+      btnPatch.hidden = true;
+      btnNext.hidden = true;
+      verdictEl.innerHTML = '';
+      renderTabs();
+      renderCode();
+      renderSignals();
+      renderConstraints();
+    }
+
+    function burst() {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const colors = ['var(--accent)', 'var(--fg)', '#e9b949', '#4f9d69', '#5b7fd6'];
+      confetti.innerHTML = Array.from({ length: 36 }, (_, i) => {
+        const left = Math.random() * 100;
+        const delay = Math.random() * 0.25;
+        const rot = Math.random() * 720 - 360;
+        const dx = Math.random() * 120 - 60;
+        return `<i style="left:${left}%;background:${colors[i % colors.length]};animation-delay:${delay}s;--rot:${rot}deg;--dx:${dx}px"></i>`;
+      }).join('');
+      setTimeout(() => (confetti.innerHTML = ''), 1800);
+    }
+
+    function submit() {
+      const l = level();
+      const failing = active().filter((c) => !check(c, values).ok);
+      if (failing.length) {
+        const msg = patched
+          ? `<strong>Rejected.</strong> ${esc(l.patched ?? '')}`
+          : `<strong>Rejected.</strong> <code>${esc(failing[0].text)}</code> doesn’t hold. Keep trying.`;
+        verdictEl.innerHTML = `<p class="no">${msg}</p>`;
+        return;
+      }
+      if (patched) {
+        // Only reachable if a level's patch is ineffective; keep the message honest.
+        verdictEl.innerHTML = `<p class="yes"><strong>Accepted.</strong></p>`;
+        return;
+      }
+      verdictEl.innerHTML = `<p class="yes"><strong>Verifier: accepted ✓</strong> ${esc(l.win)}</p>`;
+      solved.add(l.id);
+      saveSolved(solved);
+      renderTabs();
+      if (l.missing.length) {
+        burst();
+        btnPatch.hidden = false;
+      }
+      btnNext.hidden = idx >= levels.length - 1;
+    }
+
+    tabsEl.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-tab]');
+      if (b) load(Number(b.dataset.tab));
+    });
+    btnSubmit.addEventListener('click', submit);
+    btnNext.addEventListener('click', () => load(idx + 1));
+    btnHonest.addEventListener('click', () => {
+      Object.assign(values, level().honest!(values));
+      renderSignals();
+      renderConstraints();
+    });
+    btnPatch.addEventListener('click', () => {
+      patched = true;
+      btnPatch.hidden = true;
+      verdictEl.innerHTML = `<p class="info">Circuit patched. Your witness is unchanged; submit it again.</p>`;
+      renderCode();
+      renderConstraints();
+    });
+
+    load(0);
+  });
+</script>
+
+<style>
+  .bmc {
+    position: relative;
+    font-variant-ligatures: none;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .bmc-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.6rem 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .bmc-tabs :global(button) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    background: transparent;
+    font: 500 0.85rem var(--font-sans);
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    margin-bottom: -1px;
+  }
+  .bmc-tabs :global(button[aria-selected='true']) {
+    background: var(--bg);
+    border-color: var(--border);
+    color: var(--fg);
+  }
+  .bmc-tabs :global(.n) {
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: var(--surface-2);
+    font: 600 0.7rem var(--font-mono);
+  }
+  .bmc-tabs :global(button[aria-selected='true'] .n) {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .bmc-tabs :global(.ok) {
+    color: var(--ok);
+    font-weight: 700;
+  }
+
+  .bmc-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    background: var(--bg);
+  }
+  .bmc-code {
+    border-right: 1px solid var(--border);
+    background: #16161a;
+    color: #e6e3dc;
+    min-width: 0;
+  }
+  .bmc-code-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid #2a2a30;
+  }
+  .dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: #3a3a42;
+  }
+  .bmc-file {
+    margin-left: 0.5rem;
+    font: 0.75rem var(--font-mono);
+    color: #8d8a84;
+  }
+  .bmc-code pre {
+    margin: 0;
+    padding: 0.9rem 0;
+    overflow-x: auto;
+    font-size: 0.8rem;
+    line-height: 1.75;
+  }
+  .bmc-code :global(.ln) {
+    position: relative;
+    display: block;
+    padding: 0 1rem;
+    border-left: 3px solid transparent;
+    white-space: pre;
+  }
+  .bmc-code :global(.ln.ok) {
+    border-left-color: #4fbf7d;
+    background: rgb(79 191 125 / 0.08);
+  }
+  .bmc-code :global(.ln.bad) {
+    border-left-color: #f0725a;
+    background: rgb(240 114 90 / 0.1);
+  }
+  .bmc-code :global(.ln.removed) {
+    text-decoration: line-through;
+    text-decoration-color: rgb(240 114 90 / 0.6);
+  }
+  .bmc-code :global(.ln.added::before) {
+    content: '+';
+    position: absolute;
+    left: 0.25rem;
+    color: #4fbf7d;
+  }
+  .bmc-code :global(.t-kw) {
+    color: #c792ea;
+  }
+  .bmc-code :global(.t-op) {
+    color: #f6a75a;
+    font-weight: 600;
+  }
+  .bmc-code :global(.t-num) {
+    color: #7fd1b9;
+  }
+  .bmc-code :global(.t-com) {
+    color: #7a776f;
+    font-style: italic;
+  }
+
+  .bmc-panel {
+    padding: 1.1rem 1.2rem 1.2rem;
+    min-width: 0;
+  }
+  .bmc-goal {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .bmc-signals {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .bmc-signals .eyebrow,
+  .bmc-panel > .eyebrow {
+    margin: 0 0 0.4rem;
+  }
+  .bmc-mod {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .bmc-rows {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .bmc-rows :global(.bmc-row) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font: 0.85rem var(--font-mono);
+  }
+  .bmc-rows :global(.name) {
+    min-width: 3.6rem;
+    color: var(--muted);
+  }
+  .bmc-rows :global(input) {
+    width: 4.5rem;
+    padding: 0.3rem 0.45rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--fg);
+    font: 500 0.85rem var(--font-mono);
+  }
+  .bmc-rows :global(input:focus) {
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+    border-color: transparent;
+  }
+  .bmc-rows :global(.val) {
+    padding: 0.3rem 0.45rem;
+    min-width: 4.5rem;
+    border-radius: 6px;
+    background: var(--surface);
+  }
+  .bmc-rows :global(.lock) {
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  .bmc-constraints {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .bmc-constraints :global(li) {
+    display: grid;
+    grid-template-columns: 1.1rem minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: baseline;
+    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    background: var(--surface);
+  }
+  .bmc-constraints :global(li code) {
+    overflow-wrap: anywhere;
+  }
+  .bmc-constraints :global(.mark) {
+    font-weight: 700;
+  }
+  .bmc-constraints :global(li.ok .mark) {
+    color: var(--ok);
+  }
+  .bmc-constraints :global(li.bad .mark) {
+    color: var(--warn);
+  }
+  .bmc-constraints :global(li.restored) {
+    box-shadow: inset 2px 0 0 var(--ok);
+  }
+  .bmc-constraints :global(.vals) {
+    font: 0.75rem var(--font-mono);
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .bmc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .bmc-btn {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--fg);
+    font: 500 0.85rem var(--font-sans);
+    cursor: pointer;
+  }
+  .bmc-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .bmc-btn.primary {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+  }
+  .bmc-btn.primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+  .bmc-verdict :global(p) {
+    margin: 0.9rem 0 0;
+    padding: 0.7rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .bmc-verdict :global(.yes) {
+    background: color-mix(in srgb, var(--ok) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ok) 35%, transparent);
+  }
+  .bmc-verdict :global(.no) {
+    background: color-mix(in srgb, var(--warn) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+  }
+  .bmc-verdict :global(.info) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .bmc-confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .bmc-confetti :global(i) {
+    position: absolute;
+    top: -10px;
+    width: 7px;
+    height: 11px;
+    border-radius: 2px;
+    animation: bmc-fall 1.5s cubic-bezier(0.25, 0.6, 0.4, 1) forwards;
+  }
+  @keyframes bmc-fall {
+    to {
+      transform: translate(var(--dx), 420px) rotate(var(--rot));
+      opacity: 0;
+    }
+  }
+  .bmc-noscript {
+    padding: 1rem;
+    margin: 0;
+  }
+
+  @media (max-width: 820px) {
+    .bmc-grid {
+      grid-template-columns: 1fr;
+    }
+    .bmc-code {
+      border-right: 0;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+  @media (max-width: 420px) {
+    .bmc-signals {
+      grid-template-columns: 1fr;
+    }
+    .bmc-tabs {
+      padding: 0.5rem 0.4rem 0;
+      gap: 0.1rem;
+    }
+    .bmc-tabs :global(button) {
+      padding: 0.5rem 0.55rem;
+      font-size: 0.8rem;
+      gap: 0.35rem;
+    }
+  }
+</style>

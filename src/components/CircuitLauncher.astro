@@ -1,0 +1,188 @@
+---
+// Floating "Break my circuit" button (bottom-right on every page) that opens the puzzle in a dialog.
+import BreakMyCircuit from './BreakMyCircuit.astro';
+---
+
+<button type="button" class="launcher" data-launcher aria-haspopup="dialog" aria-controls="bmc-dialog">
+  <span class="pulse" aria-hidden="true"></span>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M3 7h5M3 17h5M16 12h5" />
+    <path d="M8 4h3a5 5 0 0 1 5 5v6a5 5 0 0 1-5 5H8z" />
+  </svg>
+  <span class="label">Break my circuit</span>
+</button>
+
+<dialog id="bmc-dialog" class="bmc-dialog" aria-labelledby="bmc-title">
+  <div class="dialog-head">
+    <div>
+      <h2 id="bmc-title" tabindex="-1">Break my circuit</h2>
+      <p>
+        You are the prover. The verifier doesn't run the program; it only checks the constraints. Each circuit here is
+        missing one, which is the most common bug in real ZK systems. Find a witness that fools it.
+      </p>
+    </div>
+    <button type="button" class="close" data-close aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" />
+      </svg>
+    </button>
+  </div>
+  <BreakMyCircuit />
+</dialog>
+
+<script>
+  const dialog = document.getElementById('bmc-dialog') as HTMLDialogElement | null;
+  const launcher = document.querySelector<HTMLButtonElement>('[data-launcher]');
+  if (dialog && launcher) {
+    launcher.addEventListener('click', () => {
+      dialog.showModal();
+      // Land on the title, so keyboard users start inside the panel without a ring on the close button.
+      dialog.querySelector<HTMLElement>('#bmc-title')?.focus();
+      launcher.classList.add('seen');
+    });
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    // Click on the backdrop (outside the panel) closes it.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  .launcher {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem 0.7rem 0.9rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--fg);
+    color: var(--bg);
+    font: 500 0.875rem var(--font-sans);
+    cursor: pointer;
+    box-shadow:
+      0 6px 20px rgb(0 0 0 / 0.18),
+      0 1px 3px rgb(0 0 0 / 0.12);
+    transition:
+      transform 0.15s,
+      background 0.15s;
+  }
+  .launcher:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+  }
+  .pulse {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent);
+    animation: pulse 2s ease-out 1s 3;
+  }
+  .launcher:hover .pulse,
+  .launcher.seen .pulse {
+    display: none;
+  }
+  @keyframes pulse {
+    to {
+      box-shadow: 0 0 0 10px transparent;
+    }
+  }
+
+  .bmc-dialog {
+    width: min(64rem, calc(100vw - 2.5rem));
+    max-height: min(90vh, 52rem);
+    margin: auto 1.25rem 1.25rem auto;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg);
+    color: var(--fg);
+    box-shadow: 0 24px 60px rgb(0 0 0 / 0.3);
+    overflow: auto;
+  }
+  .bmc-dialog:focus,
+  .dialog-head h2:focus {
+    outline: none;
+  }
+  .bmc-dialog[open] {
+    animation: rise 0.22s cubic-bezier(0.2, 0.8, 0.3, 1);
+  }
+  .bmc-dialog::backdrop {
+    background: rgb(15 15 16 / 0.35);
+    backdrop-filter: blur(2px);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
+  .dialog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .dialog-head h2 {
+    font-size: 1.6rem;
+  }
+  .dialog-head p {
+    margin: 0.4rem 0 0;
+    max-width: 44rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .close:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .launcher {
+      right: 1rem;
+      bottom: 1rem;
+      padding: 0.65rem 0.85rem;
+    }
+    .bmc-dialog {
+      width: 100vw;
+      max-width: 100vw;
+      max-height: 92vh;
+      margin: auto 0 0 0;
+      padding: 1rem;
+      border-radius: 16px 16px 0 0;
+      border-bottom: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse,
+    .bmc-dialog[open] {
+      animation: none;
+    }
+  }
+  @media print {
+    .launcher {
+      display: none;
+    }
+  }
+</style>

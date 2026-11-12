@@ -1,0 +1,290 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import PostItem from '../components/PostItem.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import TalkItem from '../components/TalkItem.astro';
+import avatar from '../assets/me.png';
+import { profile, socials, work, interests } from '../data/site';
+
+const byDate = <T extends { data: { date: Date } }>(a: T, b: T) => b.data.date.valueOf() - a.data.date.valueOf();
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(byDate).slice(0, 3);
+const pubs = (await getCollection('publications')).sort(byDate);
+const talks = (await getCollection('talks')).sort(byDate).slice(0, 3);
+const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].includes(s.icon));
+---
+
+<Base>
+  <section class="hero container">
+    <div class="hero-text">
+      <p class="eyebrow">
+        {profile.role} · <a href={profile.org.url}>{profile.org.name}</a>
+      </p>
+      <h1>{profile.name}</h1>
+      <p class="lede">{profile.tagline}</p>
+      <p class="intro">
+        I work on zero-knowledge proof systems, from the math to the prover code. Right now I'm building{' '}
+        <a href={profile.org.url}>ZisK</a>, a high-performance zkVM. Before that I was at Polygon working on the zkEVM
+        proving stack: the eAIR arithmetization and the proving system that composes{' '}
+        <a href="/publications/#2024-estark">eSTARK</a> with fflonK. My background is in mathematics and applied
+        cryptography (UPC).
+      </p>
+      <ul class="hero-links">
+        {
+          heroLinks.map((s) => (
+            <li>
+              <a href={s.url} rel="me noopener">
+                <SocialIcon icon={s.icon} size={15} />
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={profile.cv} class="cv-link">Download CV ↓</a>
+        </li>
+      </ul>
+    </div>
+    <div class="hero-photo">
+      <Image src={avatar} alt={`Portrait of ${profile.name}`} width={280} height={280} loading="eager" />
+    </div>
+  </section>
+
+  <div class="container">
+    <p class="interests meta">
+      <span class="eyebrow">Interests</span>
+      {interests.join(' / ')}
+    </p>
+  </div>
+
+  <section class="section container" id="work">
+    <div class="section-head">
+      <h2>Selected work</h2>
+    </div>
+    <div class="work-grid">
+      {
+        work.map((w) => (
+          <article class="work">
+            <div class="work-top">
+              <h3>{w.title}</h3>
+              <span class="meta">{w.period}</span>
+            </div>
+            <p>{w.summary}</p>
+            <div class="work-foot">
+              <ul class="work-tags">
+                {w.tags.map((t) => (
+                  <li class="tag">{t}</li>
+                ))}
+              </ul>
+              <ul class="chips">
+                {w.links.map((l) => (
+                  <li>
+                    <a class="chip" href={l.url}>
+                      {l.label} ↗
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section container" id="writing">
+    <div class="section-head">
+      <h2>Writing</h2>
+      <a href="/writing/">All writing →</a>
+    </div>
+    <div class="narrow">
+      {posts.map((post) => <PostItem post={post} />)}
+    </div>
+  </section>
+
+  <section class="section container" id="publications">
+    <div class="section-head">
+      <h2>Publications</h2>
+      <a href="/publications/">Abstracts & BibTeX →</a>
+    </div>
+    <div class="narrow">
+      {pubs.map((pub) => <PublicationItem pub={pub} compact />)}
+    </div>
+  </section>
+
+  <section class="section container" id="talks">
+    <div class="section-head">
+      <h2>Talks</h2>
+      <a href="/talks/">All talks →</a>
+    </div>
+    <div class="talks">
+      {talks.map((talk) => <TalkItem talk={talk} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    padding-block: 4.5rem 2.5rem;
+  }
+  .eyebrow a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-top: 0.75rem;
+  }
+  .lede {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.25rem, 3vw, 1.55rem);
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 1rem 0 0;
+    max-width: 34rem;
+  }
+  .intro {
+    margin: 1.25rem 0 0;
+    max-width: 38rem;
+    color: var(--fg);
+  }
+  .intro a {
+    color: var(--accent);
+  }
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0 0;
+  }
+  .hero-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    color: var(--fg);
+  }
+  .hero-links a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .hero-links .cv-link {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .hero-links .cv-link:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+  .hero-photo img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    filter: saturate(0.92);
+  }
+  .interests {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: 0 0 1rem;
+    color: var(--muted);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .work {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 0.15s;
+  }
+  .work:hover {
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  }
+  .work-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .work h3 {
+    font-size: 1.35rem;
+  }
+  .work-top .meta {
+    white-space: nowrap;
+  }
+  .work p {
+    margin: 0.6rem 0 1.1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .work-foot {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .work .tag {
+    background: var(--bg);
+  }
+  .talks {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-top: 2.5rem;
+    }
+    .hero-photo {
+      order: -1;
+    }
+    .hero-photo img {
+      width: 7rem;
+      height: 7rem;
+      border-radius: 14px;
+    }
+    .work-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

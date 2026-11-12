@@ -1,0 +1,65 @@
+---
+import SocialIcon from './SocialIcon.astro';
+import { profile, socials } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="container foot">
+    <p class="meta">© {new Date().getFullYear()} {profile.name}</p>
+    <ul class="socials" aria-label="Elsewhere">
+      {
+        socials.map((s) => (
+          <li>
+            <a href={s.url} aria-label={s.label} title={s.label} rel="me noopener">
+              <SocialIcon icon={s.icon} size={16} />
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="/rss.xml" aria-label="RSS feed" title="RSS feed">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" />
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+  }
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-block: 2rem;
+  }
+  .foot p {
+    margin: 0;
+  }
+  .socials {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    color: var(--faint);
+  }
+  .socials a:hover {
+    color: var(--accent);
+    background: var(--surface);
+  }
+</style>

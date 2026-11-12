@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostItem from '../../components/PostItem.astro';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Base title="Writing" description="Notes on zero-knowledge proofs, cryptography and the math behind them.">
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>Writing</h1>
+      <p>Notes on zero-knowledge proofs, cryptography and the math behind them. Some posts include interactive demos.</p>
+    </header>
+    {posts.map((post) => <PostItem post={post} />)}
+  </div>
+</Base>

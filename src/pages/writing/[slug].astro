@@ -1,0 +1,120 @@
+---
+import 'katex/dist/katex.min.css';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate, readingTime } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<'writing'> };
+const { Content, headings } = await render(post);
+const { title, summary, date, updated, tags } = post.data;
+const toc = headings.filter((h) => h.depth <= 3);
+---
+
+<Base title={title} description={summary} article={{ published: date, tags }}>
+  <article class="container post-layout">
+    <header class="post-head narrow">
+      <a href="/writing/" class="back meta">← Writing</a>
+      <h1>{title}</h1>
+      <p class="summary">{summary}</p>
+      <p class="meta">
+        <time datetime={date.toISOString()}>{formatDate(date, { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        {[updated && `updated ${formatDate(updated)}`, `${readingTime(post.body)} min read`, tags.join(', ')]
+          .filter(Boolean)
+          .map((part) => ` · ${part}`)
+          .join('')}
+      </p>
+    </header>
+
+    <div class="post-grid">
+      <div class="prose narrow">
+        <Content />
+      </div>
+      {
+        toc.length > 2 && (
+          <aside class="toc" aria-label="On this page">
+            <p class="eyebrow">On this page</p>
+            <ul>
+              {toc.map((h) => (
+                <li class={`d${h.depth}`}>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-head {
+    padding-block: 3rem 2.25rem;
+  }
+  .back {
+    text-decoration: none;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.1rem);
+    letter-spacing: -0.02em;
+    margin: 1rem 0 0;
+  }
+  .summary {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    color: var(--muted);
+    margin: 0.75rem 0 1rem;
+  }
+  .post-head .meta {
+    margin: 0;
+  }
+  .post-layout {
+    max-width: 70rem;
+  }
+  .post-grid {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure)) minmax(12rem, 15rem);
+    justify-content: space-between;
+    gap: 3rem;
+  }
+  .toc {
+    position: sticky;
+    top: 5.5rem;
+    align-self: start;
+    font-size: 0.85rem;
+  }
+  .toc ul {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 1px solid var(--border);
+  }
+  .toc li + li {
+    margin-top: 0.4rem;
+  }
+  .toc .d3 {
+    padding-left: 0.75rem;
+  }
+  .toc a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    color: var(--accent);
+  }
+  @media (max-width: 980px) {
+    .post-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .toc {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+// Interactive version of the F_97 example from "Degree Adjustment in SNARKs".
+// g(X) = α·f(X) + β·X^(D-d)·f(X), reduced mod Z_H(X) = X^16 - 1 over F_97.
+// Plain <script>: runs in the browser and needs no UI framework.
+---
+
+<figure class="demo" data-degree-demo>
+  <figcaption>
+    <span class="demo-label">Try it</span>
+    Same field, domain and <i>f</i> as above (𝔽<sub>97</sub>, |<i>H</i>| = 16, <i>D</i> = 8, <i>d</i> = 5). Pick
+    the challenges and see whether the degree check catches the cheating <i>f</i>.
+  </figcaption>
+
+  <div class="demo-controls">
+    <label>
+      <span>α</span>
+      <input type="number" min="0" max="96" value="3" data-alpha />
+    </label>
+    <label>
+      <span>β</span>
+      <input type="number" min="0" max="96" value="13" data-beta />
+    </label>
+    <div class="demo-presets">
+      <button type="button" data-preset="1,1">No randomness (α = β = 1)</button>
+      <button type="button" data-preset="3,13">α = 3, β = 13</button>
+      <button type="button" data-preset="random">Random</button>
+    </div>
+  </div>
+
+  <div class="demo-output">
+    <div class="demo-row">
+      <span class="demo-key">g̃(X) =</span>
+      <code data-poly></code>
+    </div>
+    <div class="demo-row">
+      <span class="demo-key">deg g̃ =</span>
+      <code data-deg></code>
+    </div>
+    <p class="demo-verdict" data-verdict></p>
+  </div>
+</figure>
+
+<script>
+  const P = 97n;
+  const N = 16; // |H|, so Z_H(X) = X^16 - 1 and X^16 ≡ 1 on H
+  const D = 8;
+  const d = 5;
+
+  const mod = (a: bigint) => ((a % P) + P) % P;
+
+  // f ≡ X^14 - X^11 + X^8 - X^5 (mod Z_H), as in the post. Index = exponent.
+  const f: bigint[] = Array(N).fill(0n);
+  f[14] = 1n; f[11] = P - 1n; f[8] = 1n; f[5] = P - 1n;
+
+  // Reduce a polynomial mod X^N - 1: exponent e folds onto e mod N.
+  function reduce(coeffs: Map<number, bigint>): bigint[] {
+    const out: bigint[] = Array(N).fill(0n);
+    for (const [e, c] of coeffs) out[e % N] = mod(out[e % N] + c);
+    return out;
+  }
+
+  function g(alpha: bigint, beta: bigint): bigint[] {
+    const terms = new Map<number, bigint>();
+    const add = (e: number, c: bigint) => terms.set(e, mod((terms.get(e) ?? 0n) + c));
+    f.forEach((c, e) => {
+      if (c === 0n) return;
+      add(e, alpha * c); //            α·f(X)
+      add(e + (D - d), beta * c); //   β·X^(D-d)·f(X)
+    });
+    return reduce(terms);
+  }
+
+  const signed = (c: bigint) => (c > P / 2n ? c - P : c);
+  const sup = (e: number) => (e === 0 ? '' : e === 1 ? 'X' : `X<sup>${e}</sup>`);
+
+  function format(poly: bigint[]): string {
+    const parts: string[] = [];
+    for (let e = N - 1; e >= 0; e--) {
+      const c = signed(poly[e]);
+      if (c === 0n) continue;
+      const abs = c < 0n ? -c : c;
+      const coef = abs === 1n && e > 0 ? '' : `${abs}${e > 0 ? '·' : ''}`;
+      const sign = c < 0n ? '−' : '+';
+      parts.push(parts.length === 0 ? `${c < 0n ? '−' : ''}${coef}${sup(e)}` : ` ${sign} ${coef}${sup(e)}`);
+    }
+    return parts.length ? parts.join('') : '0';
+  }
+
+  const degree = (poly: bigint[]) => {
+    for (let e = N - 1; e >= 0; e--) if (poly[e] !== 0n) return e;
+    return -Infinity;
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-degree-demo]').forEach((root) => {
+    const alphaIn = root.querySelector<HTMLInputElement>('[data-alpha]')!;
+    const betaIn = root.querySelector<HTMLInputElement>('[data-beta]')!;
+    const polyOut = root.querySelector<HTMLElement>('[data-poly]')!;
+    const degOut = root.querySelector<HTMLElement>('[data-deg]')!;
+    const verdict = root.querySelector<HTMLElement>('[data-verdict]')!;
+
+    const read = (el: HTMLInputElement) => mod(BigInt(Math.trunc(Number(el.value) || 0)));
+
+    function update() {
+      const poly = g(read(alphaIn), read(betaIn));
+      const deg = degree(poly);
+      polyOut.innerHTML = format(poly);
+      degOut.textContent = Number.isFinite(deg) ? String(deg) : '−∞';
+      const fooled = deg < D;
+      verdict.dataset.state = fooled ? 'fooled' : 'caught';
+      verdict.textContent = fooled
+        ? `deg g̃ < D = ${D}: the check passes, even though deg f̃ = 14 ≥ d. The prover got away with it.`
+        : `deg g̃ ≥ D = ${D}: the check fails, so the high-degree f̃ is caught.`;
+    }
+
+    root.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const preset = btn.dataset.preset!;
+        const [a, b] =
+          preset === 'random'
+            ? [1 + Math.floor(Math.random() * 96), 1 + Math.floor(Math.random() * 96)]
+            : preset.split(',').map(Number);
+        alphaIn.value = String(a);
+        betaIn.value = String(b);
+        update();
+      }),
+    );
+    alphaIn.addEventListener('input', update);
+    betaIn.addEventListener('input', update);
+    update();
+  });
+</script>

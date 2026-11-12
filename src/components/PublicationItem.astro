@@ -1,0 +1,181 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { authorList, year } from '../lib/format';
+
+interface Props {
+  pub: CollectionEntry<'publications'>;
+  compact?: boolean;
+}
+const { pub, compact = false } = Astro.props;
+const { title, authors, date, venue, type, abstract, links, bibtex } = pub.data;
+const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Preprint', thesis: 'Thesis' }[type];
+---
+
+<article class="pub" id={pub.id}>
+  <div class="pub-year meta">{year(date)}</div>
+  <div class="pub-body">
+    <h3>
+      <a href={links[0]?.url ?? `#${pub.id}`}>{title}</a>
+    </h3>
+    <p class="authors">
+      {
+        authorList(authors).map((a, i, all) => (
+          <>
+            <span class={a.me ? 'me' : undefined}>{a.name}</span>
+            {i < all.length - 1 ? ', ' : ''}
+          </>
+        ))
+      }
+    </p>
+    <p class="venue meta">
+      <span class="tag">{typeLabel}</span>
+      {venue && <span>{venue}</span>}
+    </p>
+    {
+      !compact && (
+        <div class="pub-actions">
+          <ul class="chips">
+            {links.map((l) => (
+              <li>
+                <a class="chip" href={l.url}>
+                  {l.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+          <button type="button" class="chip" aria-expanded="false" aria-controls={`${pub.id}-abstract`}>
+            Abstract
+          </button>
+          {bibtex && (
+            <button type="button" class="chip" aria-expanded="false" aria-controls={`${pub.id}-bibtex`}>
+              BibTeX
+            </button>
+          )}
+        </div>
+      )
+    }
+    {
+      !compact && (
+        <>
+          <p class="abstract panel" id={`${pub.id}-abstract`} hidden>
+            {abstract}
+          </p>
+          {bibtex && (
+            <div class="bib panel" id={`${pub.id}-bibtex`} hidden>
+              <pre><code>{bibtex}</code></pre>
+              <button type="button" class="chip copy" data-copy={bibtex}>
+                Copy
+              </button>
+            </div>
+          )}
+        </>
+      )
+    }
+  </div>
+</article>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.pub button[aria-controls]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById(btn.getAttribute('aria-controls')!);
+      if (!panel) return;
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+    }),
+  );
+  document.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) =>
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+        btn.textContent = 'Copied';
+        setTimeout(() => (btn.textContent = 'Copy'), 1500);
+      } catch {
+        btn.textContent = 'Select & copy manually';
+      }
+    }),
+  );
+</script>
+
+<style>
+  .pub {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .pub:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .pub-year {
+    padding-top: 0.3rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  .authors {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .me {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .venue {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 0.4rem 0 0;
+  }
+  .pub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+  button[aria-expanded='true'] {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .abstract,
+  .bib {
+    margin: 0.85rem 0 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .bib {
+    position: relative;
+  }
+  .bib pre {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--fg);
+  }
+  .copy {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--bg);
+  }
+  @media (max-width: 560px) {
+    .pub {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

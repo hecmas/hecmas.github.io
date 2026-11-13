@@ -1,11 +1,122 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import TraceTable from '../components/TraceTable.astro';
+import avatar from '../assets/me.png';
 ---
 
 <Base title="Not found">
-  <div class="container narrow page-head">
-    <p class="eyebrow">404</p>
-    <h1>This page doesn't exist.</h1>
-    <p>Maybe it moved when the site was rebuilt. Try the <a href="/">homepage</a> or <a href="/writing/">writing</a>.</p>
-  </div>
+  <section class="container nf">
+    <div class="nf-text">
+      <p class="eyebrow">404 · soundness error</p>
+      <h1>The verifier rejected this URL.</h1>
+      <p class="lede">No valid witness exists for this path.</p>
+      <p>
+        The page may have moved when the site was rebuilt. Try the <a href="/">homepage</a>, the{' '}
+        <a href="/writing/">writing</a>, or, while you're here, go break a circuit.
+      </p>
+      <button type="button" class="play" data-open-puzzle>Break my circuit →</button>
+    </div>
+    <div class="nf-art">
+      <div class="nf-trace"><TraceTable /></div>
+      <Image src={avatar} alt="A blindfolded monkey typing at a keyboard" width={240} height={240} />
+    </div>
+  </section>
 </Base>
+
+<script>
+  document.querySelector('[data-open-puzzle]')?.addEventListener('click', () => {
+    document.querySelector<HTMLButtonElement>('[data-launcher]')?.click();
+  });
+</script>
+
+<style>
+  .nf {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    padding-block: 5rem 3rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    letter-spacing: -0.02em;
+    margin-top: 0.75rem;
+  }
+  .lede {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--muted);
+    margin: 1rem 0 0;
+  }
+  .nf-text > p:not(.eyebrow):not(.lede) {
+    margin: 1.25rem 0 0;
+    max-width: 34rem;
+  }
+  .nf-text a {
+    color: var(--accent);
+  }
+  .eyebrow {
+    color: var(--warn);
+  }
+  .play {
+    margin-top: 1.75rem;
+    padding: 0.6rem 1rem;
+    border: 0;
+    border-radius: 4px;
+    background: var(--fg);
+    color: var(--bg);
+    font: 500 0.9rem var(--font-sans);
+    cursor: pointer;
+  }
+  .play:hover {
+    background: var(--accent);
+  }
+  .nf-art {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .nf-trace {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+  /* This time the scan row is stuck on a failing row. */
+  .nf-trace :global(.scan) {
+    animation: none;
+    transform: translateY(calc(6 * var(--row-h)));
+    background: color-mix(in srgb, var(--warn) 18%, transparent);
+    border-left-color: var(--warn);
+  }
+  .nf-art img {
+    position: relative;
+    width: 13rem;
+    height: 13rem;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 0 0 6px var(--bg),
+      0 0 0 7px color-mix(in srgb, var(--warn) 55%, transparent);
+  }
+  @media (max-width: 760px) {
+    .nf {
+      grid-template-columns: 1fr;
+      padding-top: 2.5rem;
+    }
+    .nf-art {
+      order: -1;
+      justify-items: start;
+    }
+    .nf-trace {
+      display: none;
+    }
+    .nf-art img {
+      width: 7rem;
+      height: 7rem;
+    }
+  }
+</style>

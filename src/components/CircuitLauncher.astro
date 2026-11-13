@@ -5,9 +5,15 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
 
 <button type="button" class="launcher" data-launcher aria-haspopup="dialog" aria-controls="bmc-dialog">
   <span class="pulse" aria-hidden="true"></span>
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M3 7h5M3 17h5M16 12h5" />
-    <path d="M8 4h3a5 5 0 0 1 5 5v6a5 5 0 0 1-5 5H8z" />
+  <svg class="gate" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <g class="body">
+      <path d="M3 7h5M3 17h5M16 12h5" />
+      <path d="M8 4h3a5 5 0 0 1 5 5v6a5 5 0 0 1-5 5H8z" />
+    </g>
+    <!-- Lightning that crackles out of the output wire on hover: the circuit is breaking. -->
+    <path class="bolt b1" d="M21 12l2.5-7h-3.5l3.5-10" />
+    <path class="bolt b2" d="M22 11l7-5.5l-3-1l6.5-6" />
+    <path class="bolt b3" d="M12 4l-2.5-6.5h3.5l-3-8" />
   </svg>
   <span class="label">Break my circuit</span>
 </button>
@@ -59,7 +65,7 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
     gap: 0.5rem;
     padding: 0.7rem 1rem 0.7rem 0.9rem;
     border: 0;
-    border-radius: 999px;
+    border-radius: 6px;
     background: var(--fg);
     color: var(--bg);
     font: 500 0.875rem var(--font-sans);
@@ -72,8 +78,50 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
       background 0.15s;
   }
   .launcher:hover {
-    background: var(--accent);
     transform: translateY(-2px);
+  }
+  .gate {
+    overflow: visible;
+    flex: none;
+  }
+  .bolt {
+    stroke: var(--bolt, #e2b34a);
+    stroke-width: 2;
+    opacity: 0;
+    filter: drop-shadow(0 0 2.5px var(--bolt, #e2b34a));
+  }
+  /* In dark mode the button is light, so the lightning needs a deeper gold. */
+  :global(:root[data-theme='dark']) .launcher {
+    --bolt: #a8740f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .launcher {
+      --bolt: #a8740f;
+    }
+  }
+  .launcher:hover .bolt,
+  .launcher:focus-visible .bolt {
+    animation: zap 1.1s steps(1, end) infinite;
+  }
+  .launcher:hover .b2 {
+    animation-delay: 0.18s;
+  }
+  .launcher:hover .b3 {
+    animation-delay: 0.37s;
+  }
+  .launcher:hover .body {
+    animation: jolt 0.28s steps(2, end) infinite;
+  }
+  @keyframes zap {
+    0% { opacity: 1; }
+    9% { opacity: 0; }
+    16% { opacity: 1; }
+    24% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes jolt {
+    0% { transform: translate(0.6px, -0.4px); }
+    50% { transform: translate(-0.6px, 0.4px); }
   }
   .pulse {
     position: absolute;
@@ -102,7 +150,7 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
     margin: auto 1.25rem 1.25rem auto;
     padding: 1.25rem;
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 8px;
     background: var(--bg);
     color: var(--fg);
     box-shadow: 0 24px 60px rgb(0 0 0 / 0.3);
@@ -170,14 +218,20 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
       max-height: 92vh;
       margin: auto 0 0 0;
       padding: 1rem;
-      border-radius: 16px 16px 0 0;
+      border-radius: 8px 8px 0 0;
       border-bottom: 0;
     }
   }
   @media (prefers-reduced-motion: reduce) {
     .pulse,
-    .bmc-dialog[open] {
+    .bmc-dialog[open],
+    .launcher:hover .body {
       animation: none;
+    }
+    /* No flicker: show the bolts steadily instead. */
+    .launcher:hover .bolt {
+      animation: none;
+      opacity: 1;
     }
   }
   @media print {

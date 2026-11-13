@@ -299,15 +299,19 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
     .hero-photo {
       order: -1;
     }
+    /* Phones: keep the trace, scaled down and clipped to the screen width. */
     .hero-photo {
-      justify-items: start;
+      width: 100%;
+      height: 12.5rem;
+      overflow: hidden;
+      justify-items: center;
     }
     .hero-trace {
-      display: none;
+      scale: 0.72;
     }
     .hero-photo img {
-      width: 7rem;
-      height: 7rem;
+      width: 8rem;
+      height: 8rem;
       border-radius: 6px;
     }
     .work-grid {

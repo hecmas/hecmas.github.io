@@ -19,20 +19,19 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
 </button>
 
 <dialog id="bmc-dialog" class="bmc-dialog" aria-labelledby="bmc-title">
-  <div class="dialog-head">
-    <div>
-      <h2 id="bmc-title" tabindex="-1">Break my circuit</h2>
-      <p>
-        You are the prover. The verifier doesn't run the program; it only checks the constraints. Each circuit here is
-        missing one, which is the most common bug in real ZK systems. Find a witness that fools it.
-      </p>
-    </div>
+  <!-- Pinned bar: the title and close button stay visible however far the panel is scrolled. -->
+  <div class="dialog-bar">
+    <h2 id="bmc-title" tabindex="-1">Break my circuit</h2>
     <button type="button" class="close" data-close aria-label="Close">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <path d="M6 6l12 12M18 6 6 18" />
       </svg>
     </button>
   </div>
+  <p class="dialog-intro">
+    You are the prover. The verifier doesn't run the program; it only checks the constraints. Each circuit here is
+    missing one, which is the most common bug in real ZK systems. Find a witness that fools it.
+  </p>
   <BreakMyCircuit />
 </dialog>
 
@@ -147,8 +146,9 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
   .bmc-dialog {
     width: min(64rem, calc(100vw - 2.5rem));
     max-height: min(90vh, 52rem);
+    max-height: min(90dvh, 52rem); /* dvh follows the mobile address bar; vh is the fallback */
     margin: auto 1.25rem 1.25rem auto;
-    padding: 1.25rem;
+    padding: 0 1.25rem 1.25rem;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--bg);
@@ -156,8 +156,7 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
     box-shadow: 0 24px 60px rgb(0 0 0 / 0.3);
     overflow: auto;
   }
-  .bmc-dialog:focus,
-  .dialog-head h2:focus {
+  .bmc-dialog:focus {
     outline: none;
   }
   .bmc-dialog[open] {
@@ -173,18 +172,25 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
       transform: translateY(16px) scale(0.98);
     }
   }
-  .dialog-head {
+  .dialog-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    padding: 1.1rem 0 0.6rem;
+    background: var(--bg);
   }
-  .dialog-head h2 {
+  .dialog-bar h2 {
     font-size: 1.6rem;
   }
-  .dialog-head p {
-    margin: 0.4rem 0 0;
+  .dialog-bar h2:focus {
+    outline: none;
+  }
+  .dialog-intro {
+    margin: 0 0 1rem;
     max-width: 44rem;
     color: var(--muted);
     font-size: 0.95rem;
@@ -215,9 +221,10 @@ import BreakMyCircuit from './BreakMyCircuit.astro';
     .bmc-dialog {
       width: 100vw;
       max-width: 100vw;
-      max-height: 92vh;
+      max-height: 88vh;
+      max-height: 88dvh;
       margin: auto 0 0 0;
-      padding: 1rem;
+      padding: 0 1rem 1rem;
       border-radius: 8px 8px 0 0;
       border-bottom: 0;
     }

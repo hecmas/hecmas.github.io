@@ -109,14 +109,18 @@ import avatar from '../assets/me.png';
     }
     .nf-art {
       order: -1;
-      justify-items: start;
+      width: 100%;
+      height: 12.5rem;
+      overflow: hidden;
+      justify-items: center;
     }
+    /* Phones: keep the trace, scaled down and clipped to the screen width. */
     .nf-trace {
-      display: none;
+      scale: 0.72;
     }
     .nf-art img {
-      width: 7rem;
-      height: 7rem;
+      width: 8rem;
+      height: 8rem;
     }
   }
 </style>

@@ -1,0 +1,98 @@
+---
+// A decorative STARK-style execution trace: rows are steps, columns are registers, cells are
+// Goldilocks field elements (shown truncated). A gold bar steps down the rows like a constraint
+// being checked. Values come from a fixed seed so the table is identical on every build.
+const ROWS = 14;
+const cols = ['step', 'pc', 'a', 'b', 'c', 'flag'];
+
+let seed = 0x2f1a9c3d;
+const rand = () => {
+  seed ^= seed << 13;
+  seed ^= seed >>> 17;
+  seed ^= seed << 5;
+  return (seed >>> 0) / 0x100000000;
+};
+const hex = (digits: number) =>
+  Array.from({ length: digits }, () => '0123456789abcdef'[Math.floor(rand() * 16)]).join('');
+
+const rows = Array.from({ length: ROWS }, (_, r) => [
+  String(r).padStart(2, '0'),
+  `0x${(0x1000 + r * 4).toString(16)}`,
+  `${hex(4)}…${hex(3)}`,
+  `${hex(4)}…${hex(3)}`,
+  `${hex(4)}…${hex(3)}`,
+  rand() > 0.5 ? '1' : '0',
+]);
+---
+
+<div class="trace" aria-hidden="true" style={`--rows:${ROWS}`}>
+  <div class="head">{cols.map((c) => <span>{c}</span>)}</div>
+  <div class="body">
+    <div class="scan"></div>
+    {
+      rows.map((row) => (
+        <div class="row">
+          {row.map((cell) => (
+            <span>{cell}</span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .trace {
+    --row-h: 1.55rem;
+    font: 0.68rem/1 var(--font-mono);
+    color: var(--faint);
+    user-select: none;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 45%, transparent 100%);
+  }
+  .head,
+  .row {
+    display: grid;
+    grid-template-columns: 2.2rem 3.4rem repeat(3, 5.6rem) 2.4rem;
+    gap: 0.6rem;
+    align-items: center;
+    height: var(--row-h);
+    padding-inline: 0.6rem;
+    white-space: nowrap;
+  }
+  .head {
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .body {
+    position: relative;
+  }
+  .row {
+    border-bottom: 1px dashed color-mix(in srgb, var(--border) 70%, transparent);
+  }
+  .scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: var(--row-h);
+    background: color-mix(in srgb, var(--gold) 18%, transparent);
+    border-left: 2px solid var(--gold);
+    animation: scan calc(var(--rows) * 0.55s) steps(var(--rows)) infinite;
+  }
+  @keyframes scan {
+    to {
+      transform: translateY(calc(var(--rows) * var(--row-h)));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scan {
+      animation: none;
+      transform: translateY(calc(3 * var(--row-h)));
+    }
+  }
+</style>

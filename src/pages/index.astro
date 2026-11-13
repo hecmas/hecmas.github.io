@@ -7,6 +7,7 @@ import SocialIcon from '../components/SocialIcon.astro';
 import PostItem from '../components/PostItem.astro';
 import PublicationItem from '../components/PublicationItem.astro';
 import TalkItem from '../components/TalkItem.astro';
+import TraceTable from '../components/TraceTable.astro';
 import avatar from '../assets/me.png';
 import { profile, socials, work, interests } from '../data/site';
 
@@ -50,6 +51,7 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
       </ul>
     </div>
     <div class="hero-photo">
+      <div class="hero-trace"><TraceTable /></div>
       <Image src={avatar} alt={`Portrait of ${profile.name}`} width={280} height={280} loading="eager" />
     </div>
   </section>
@@ -196,12 +198,27 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
     border-color: var(--accent);
     color: var(--bg);
   }
+  .hero-photo {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .hero-trace {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: 0;
+  }
   .hero-photo img {
+    position: relative;
+    z-index: 1;
     width: 15rem;
     height: 15rem;
     object-fit: cover;
-    border-radius: 18px;
+    border-radius: 6px;
     border: 1px solid var(--border);
+    box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px color-mix(in srgb, var(--gold) 55%, transparent);
     filter: saturate(0.92);
   }
   .interests {
@@ -219,11 +236,12 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
     gap: 1rem;
   }
   .work {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 1.25rem 1.35rem;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: 4px;
     background: var(--surface);
     transition: border-color 0.15s;
   }
@@ -281,10 +299,16 @@ const heroLinks = socials.filter((s) => ['github', 'scholar', 'x', 'email'].incl
     .hero-photo {
       order: -1;
     }
+    .hero-photo {
+      justify-items: start;
+    }
+    .hero-trace {
+      display: none;
+    }
     .hero-photo img {
       width: 7rem;
       height: 7rem;
-      border-radius: 14px;
+      border-radius: 6px;
     }
     .work-grid {
       grid-template-columns: 1fr;

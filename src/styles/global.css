@@ -5,18 +5,19 @@
 
 /* ── Tokens ─────────────────────────────────────────────────────────────── */
 :root {
-  --bg: #fbfaf7;
-  --surface: #f2f0eb;
-  --surface-2: #ebe8e1;
-  --fg: #1b1a18;
-  --muted: #5d5a54;
-  --faint: #8c8880;
-  --border: #e3dfd7;
-  --accent: #b5410f;
-  --accent-soft: #f6e4d9;
+  /* "Goldilocks": ink and paper, with gold from p = 2^64 - 2^32 + 1 */
+  --bg: #f8f7f3;
+  --surface: #efede6;
+  --surface-2: #e6e3da;
+  --fg: #16150f;
+  --muted: #5b5850;
+  --faint: #8a867c;
+  --border: #e0ddd3;
+  --accent: #8f6400; /* text-safe gold (4.9:1) */
+  --accent-soft: #f3e7c4;
+  --gold: #c9961f; /* decorative gold: dots, highlights, never body text */
   --ok: #2f7a4b;
   --warn: #b5410f;
-
   --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
   --font-serif: 'Newsreader Variable', Georgia, serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -29,30 +30,32 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0f0f10;
-    --surface: #18181a;
-    --surface-2: #212124;
-    --fg: #ebe8e3;
-    --muted: #a8a49c;
-    --faint: #75726c;
-    --border: #2a2a2d;
-    --accent: #f08a54;
-    --accent-soft: #3a2218;
+    --bg: #0c0d10;
+    --surface: #15161a;
+    --surface-2: #1e1f24;
+    --fg: #ece9e1;
+    --muted: #a7a397;
+    --faint: #76736b;
+    --border: #26272d;
+    --accent: #e2b34a;
+    --accent-soft: #2e2412;
+    --gold: #e2b34a;
     --ok: #6fcf97;
     --warn: #f08a54;
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --bg: #0f0f10;
-  --surface: #18181a;
-  --surface-2: #212124;
-  --fg: #ebe8e3;
-  --muted: #a8a49c;
-  --faint: #75726c;
-  --border: #2a2a2d;
-  --accent: #f08a54;
-  --accent-soft: #3a2218;
+  --bg: #0c0d10;
+  --surface: #15161a;
+  --surface-2: #1e1f24;
+  --fg: #ece9e1;
+  --muted: #a7a397;
+  --faint: #76736b;
+  --border: #26272d;
+  --accent: #e2b34a;
+  --accent-soft: #2e2412;
+  --gold: #e2b34a;
   --ok: #6fcf97;
   --warn: #f08a54;
   color-scheme: dark;

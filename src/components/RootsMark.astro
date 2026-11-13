@@ -1,0 +1,83 @@
+---
+// The 16th roots of unity, ω^0 … ω^15, on a circle. ω (the generator) is drawn in gold.
+// On hover the mark repeatedly squares every point, x ↦ x², the way FRI folds its domain:
+// 16 points collapse onto 8, then 4, 2 and finally 1, and spring back.
+interface Props {
+  size?: number;
+}
+const { size = 30 } = Astro.props;
+const N = 16;
+const mod = (a: number) => ((a % 360) + 360) % 360;
+const dots = Array.from({ length: N }, (_, i) => {
+  const a = (360 / N) * i;
+  return { i, a, a2: mod(2 * a), a4: mod(4 * a), a8: mod(8 * a), a16: mod(16 * a) };
+});
+---
+
+<svg class="roots" width={size} height={size} viewBox="-16 -16 32 32" aria-hidden="true">
+  <circle class="ring" r="11" />
+  {
+    dots.map((d) => (
+      <g
+        class:list={['dot', { gen: d.i === 1, one: d.i === 0 }]}
+        style={`--a:${d.a}deg;--a2:${d.a2}deg;--a4:${d.a4}deg;--a8:${d.a8}deg;--a16:${d.a16}deg`}
+      >
+        <circle cx="11" cy="0" r={d.i === 1 ? 2.1 : 1.55} />
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .roots {
+    display: block;
+    overflow: visible;
+    flex: none;
+  }
+  .ring {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 0.6;
+  }
+  .dot {
+    transform: rotate(var(--a));
+    fill: var(--fg);
+  }
+  .dot.gen {
+    fill: var(--gold);
+  }
+  :global(.brand:hover) .dot,
+  :global(.brand:focus-visible) .dot {
+    animation: fold 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  @keyframes fold {
+    0%,
+    8% {
+      transform: rotate(var(--a));
+    }
+    22%,
+    30% {
+      transform: rotate(var(--a2));
+    }
+    44%,
+    52% {
+      transform: rotate(var(--a4));
+    }
+    64%,
+    70% {
+      transform: rotate(var(--a8));
+    }
+    82%,
+    90% {
+      transform: rotate(var(--a16));
+    }
+    100% {
+      transform: rotate(var(--a));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.brand:hover) .dot {
+      animation: none;
+    }
+  }
+</style>

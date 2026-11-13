@@ -1,0 +1,502 @@
+---
+// The CV, generated from the same data as the rest of the site (src/data/site.ts and the content
+// collections), so it never goes stale. `pnpm cv` prints this page to public/uploads/resume.pdf.
+// Layout: a sidebar (photo, contact, languages, interests) next to the main column.
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import avatar from '../assets/me.png';
+import { profile, socials, experience, education, teaching, awards, languages, interests, skills, type SocialIcon as Icon } from '../data/site';
+import { authorList, formatDate, year } from '../lib/format';
+import * as simpleIcons from 'simple-icons';
+
+const iconPath = (name: string) => (simpleIcons as unknown as Record<string, { path: string }>)[name]?.path;
+
+const byDate = <T extends { data: { date: Date } }>(a: T, b: T) => b.data.date.valueOf() - a.data.date.valueOf();
+const pubs = (await getCollection('publications')).sort(byDate);
+const site = Astro.site!.host;
+const contact: { label: string; url: string; icon: Icon | 'web' }[] = [
+  { label: profile.email, url: `mailto:${profile.email}`, icon: 'email' },
+  { label: site, url: Astro.site!.toString(), icon: 'web' },
+  ...socials
+    .filter((s) => ['github', 'scholar', 'x', 'linkedin'].includes(s.icon))
+    .map((s) => ({
+      label:
+        s.icon === 'github'
+          ? s.url.replace('https://', '')
+          : s.icon === 'x'
+            ? `@${s.url.split('/').pop()}` // show the handle, e.g. @EllipticHector
+            : s.label,
+      url: s.url,
+      icon: s.icon,
+    })),
+];
+const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Preprint', report: 'Report', thesis: 'Thesis' };
+const range = (a: string, b: string) => (a === b ? a : `${a} — ${b}`);
+---
+
+<Base title="CV" description={`Curriculum vitae of ${profile.name}.`}>
+  <article class="container cv">
+    <aside class="side">
+      <div class="photo">
+        <Image src={avatar} alt={`Portrait of ${profile.name}`} width={260} height={260} />
+      </div>
+      <h1>{profile.name}</h1>
+      <p class="role">{profile.role}<br /><a href={profile.org.url}>{profile.org.name}</a></p>
+
+      <h2>Contact</h2>
+      <ul class="contact">
+        {
+          contact.map((c) => (
+            <li>
+              <span class="ico" aria-hidden="true">
+                {c.icon === 'web' ? (
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18" />
+                  </svg>
+                ) : (
+                  <SocialIcon icon={c.icon} size={13} />
+                )}
+              </span>
+              <a href={c.url}>{c.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2>Skills</h2>
+      {
+        skills.map((g) => (
+          <>
+            <p class="sub">{g.group}</p>
+            <ul class="skills">
+              {g.items.map((item) => (
+                <li>
+                  <span class="logos" aria-hidden="true">
+                    {item.icons?.length ? (
+                      item.icons.map((n) =>
+                        n === 'lean' ? (
+                          // Lean's "L∃∀N" wordmark, redrawn with bolder strokes (same proportions as the
+                          // official logo) so it stays legible at icon size.
+                          <svg class="lean" height="9" viewBox="0 0 42 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter">
+                            <path d="M1 1V14H17.7M9.4 1H17.7V14M9.4 7.5H17.7M17.7 1L24.1 14L30.5 1M21.1 7.5H27.1M30.5 14V1L41 14V1" />
+                          </svg>
+                        ) : (
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                            <path d={iconPath(n)} />
+                          </svg>
+                        ),
+                      )
+                    ) : (
+                      <svg class="generic" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m8 7-5 5 5 5M16 7l5 5-5 5" />
+                      </svg>
+                    )}
+                  </span>
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+          </>
+        ))
+      }
+
+      <h2>Languages</h2>
+      <ul class="plain">
+        {
+          languages.map((l) => (
+            <li>
+              {l.name} <span class="lvl">{l.level}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2>Interests</h2>
+      <ul class="plain">{interests.map((i) => <li>{i}</li>)}</ul>
+
+      <a class="pdf" href={profile.cv}>Download PDF ↓</a>
+    </aside>
+
+    <div class="main">
+      <p class="summary">
+        {profile.tagline} Research engineer working on zero-knowledge proof systems, from the math to the prover code:
+        currently building ZisK, a high-performance zkVM; previously the Polygon zkEVM proving stack.
+      </p>
+
+      <section>
+        <h2>Experience</h2>
+        {
+          experience.map((e) => (
+            <div class="entry">
+              <p class="when">{range(e.start, e.end)}</p>
+              <div>
+                <h3>
+                  {e.role}, <a class="org" href={e.url}>{e.org}</a>
+                </h3>
+                <p class="desc">{e.summary}</p>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        {
+          education.map((e) => (
+            <div class="entry">
+              <p class="when">{range(e.start, e.end)}</p>
+              <div>
+                <h3>
+                  {e.degree}, <a class="org" href={e.url}>{e.org}</a>
+                </h3>
+                <p class="desc">{e.summary}</p>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>Publications</h2>
+        {
+          pubs.map((p) => (
+            <div class="entry">
+              <p class="when">{year(p.data.date)}</p>
+              <div>
+                <h3>
+                  <a href={p.data.links[0]?.url}>{p.data.title}</a>
+                </h3>
+                <p class="desc">
+                  {authorList(p.data.authors).map((a, i, all) => (
+                    <>
+                      {a.me ? <strong>{a.name}</strong> : a.name}
+                      {i < all.length - 1 ? ', ' : ''}
+                    </>
+                  ))}
+                  . <em>{p.data.venue ?? typeLabel[p.data.type]}</em>.
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>Teaching</h2>
+        {
+          teaching.map((t) => (
+            <div class="entry">
+              <p class="when">{t.years}</p>
+              <div>
+                <h3>
+                  {t.role}, <a class="org" href={t.url}>{t.program}</a>
+                </h3>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>Awards &amp; grants</h2>
+        {
+          awards.map((a) => (
+            <div class="entry">
+              <p class="when">{a.when}</p>
+              <div>
+                <h3>{a.title}</h3>
+                <p class="desc">
+                  {a.by}. {a.note}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .cv {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: 2.5rem;
+    max-width: 62rem;
+    padding-block: 3rem 2rem;
+    align-items: start;
+  }
+
+  /* ── Sidebar ─────────────────────────────────────────────────────────── */
+  .side {
+    padding: 1.5rem 1.25rem;
+    background: var(--surface);
+    border-radius: 6px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 0 0 5px var(--surface),
+      0 0 0 6px color-mix(in srgb, var(--gold) 60%, transparent);
+  }
+  h1 {
+    margin-top: 1.4rem;
+    font-size: 1.7rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .role {
+    margin: 0.4rem 0 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    color: var(--muted);
+  }
+  .role a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  h3 a {
+    color: inherit;
+    text-decoration-color: color-mix(in srgb, var(--gold) 60%, transparent);
+  }
+  .side h2 {
+    margin-top: 1.5rem;
+  }
+  .contact,
+  .plain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .contact li {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .contact li + li,
+  .plain li + li {
+    margin-top: 0.3rem;
+  }
+  .contact a {
+    color: var(--accent);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .contact a:hover {
+    color: var(--accent);
+  }
+  .ico {
+    display: grid;
+    place-items: center;
+    color: var(--fg);
+  }
+  .skills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .skills li {
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr);
+    align-items: center;
+  }
+  .skills li + li {
+    margin-top: 0.3rem;
+  }
+  .logos {
+    display: flex;
+    gap: 0.2rem;
+    color: var(--fg);
+  }
+  .logos .generic {
+    color: var(--faint);
+  }
+  .sub {
+    margin: 0.7rem 0 0.3rem;
+    font: 0.7rem var(--font-mono);
+    color: var(--faint);
+  }
+  .side h2 + .sub {
+    margin-top: 0;
+  }
+  .lvl {
+    margin-left: 0.3rem;
+    font: 0.72rem var(--font-mono);
+    color: var(--faint);
+  }
+  .pdf {
+    display: block;
+    margin-top: 1.75rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 4px;
+    background: var(--fg);
+    color: var(--bg);
+    font-size: 0.85rem;
+    text-align: center;
+    text-decoration: none;
+  }
+  .pdf:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ── Main column ─────────────────────────────────────────────────────── */
+  .summary {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.12rem;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+  section {
+    margin-top: 1.6rem;
+  }
+  h2 {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.55rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .entry {
+    display: grid;
+    grid-template-columns: 8.4rem minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 0.35rem 0;
+    break-inside: avoid;
+  }
+  .when {
+    white-space: nowrap;
+    margin: 0.12rem 0 0;
+    font: 0.72rem/1.5 var(--font-mono);
+    color: var(--faint);
+  }
+  h3 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+  /* Links: organisations (and contact links) in dark gold so they read as clickable,
+     on screen and in the PDF. Publication and talk titles stay in the text colour. */
+  h3 a.org {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  h3 a.org:hover {
+    text-decoration: underline;
+  }
+  .desc {
+    margin: 0.15rem 0 0;
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .desc strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .cv {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+      padding-top: 2rem;
+    }
+    .photo {
+      max-width: 9rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+
+  /* ── Print / PDF: A4, no site chrome, ink on paper ─────────────────────── */
+  @media print {
+    @page {
+      size: A4;
+      margin: 12mm 12mm;
+    }
+    :global(:root) {
+      --bg: #fff;
+      --surface: #f3f1ec;
+      --fg: #111;
+      --muted: #3d3b36;
+      --faint: #6b675f;
+      --border: #d9d5cc;
+      --accent: #7a5600;
+      --gold: #b4861a;
+      font-size: 12px;
+    }
+    :global(body) {
+      background: #fff;
+    }
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.launcher),
+    :global(.bmc-dialog),
+    .pdf {
+      display: none !important;
+    }
+    .cv {
+      grid-template-columns: 13.5rem minmax(0, 1fr);
+      gap: 1.75rem;
+      max-width: none;
+      padding: 0;
+    }
+    .photo img {
+      box-shadow:
+        0 0 0 4px var(--surface),
+        0 0 0 5px color-mix(in srgb, var(--gold) 60%, transparent);
+    }
+    /* Full-height sidebar on page 1 (A4 height minus the page margins). */
+    .side {
+      min-height: calc(297mm - 24mm);
+      border-radius: 4px;
+    }
+    section {
+      margin-top: 0.85rem;
+    }
+    .summary {
+      font-size: 1.05rem;
+    }
+    /* Never leave a section heading alone at the bottom of a page. */
+    h2 {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    .entry {
+      grid-template-columns: 8.6rem minmax(0, 1fr);
+      padding: 0.18rem 0;
+    }
+    a {
+      text-decoration: none !important;
+    }
+  }
+</style>

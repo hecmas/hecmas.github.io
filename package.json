@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "import-hackmd": "node scripts/import-hackmd.mjs",
-    "sync-hackmd": "node scripts/sync-hackmd.mjs"
+    "sync-hackmd": "node scripts/sync-hackmd.mjs",
+    "cv": "astro build --force && node scripts/cv-pdf.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.8",

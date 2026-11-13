@@ -103,7 +103,7 @@ export const experience = [
   },
   {
     role: 'Doctoral Researcher',
-    org: 'Polytechnic University of Catalonia (UPC)',
+    org: 'Polytechnic University of Catalonia',
     url: 'https://entel.upc.edu/en',
     start: '2021',
     end: '2023',
@@ -112,7 +112,7 @@ export const experience = [
   },
   {
     role: 'Research Staff Member',
-    org: 'Polytechnic University of Catalonia (UPC)',
+    org: 'Polytechnic University of Catalonia',
     url: 'https://www.upc.edu/en',
     start: '2021',
     end: '2021',
@@ -120,7 +120,7 @@ export const experience = [
   },
   {
     role: 'Research Collaborator',
-    org: 'Information Security Group (UPC) & Codegram',
+    org: 'Polytechnic University of Catalonia & Codegram',
     url: 'https://www.upc.edu/en',
     start: '2020',
     end: '2020',
@@ -131,7 +131,7 @@ export const experience = [
 export const education = [
   {
     degree: 'Doctoral Studies, Applied Cryptography',
-    org: 'Polytechnic University of Catalonia (UPC)',
+    org: 'Polytechnic University of Catalonia',
     url: 'https://entel.upc.edu/en',
     start: '2021',
     end: '2023',
@@ -147,7 +147,7 @@ export const education = [
   },
   {
     degree: 'MSc, Advanced Mathematics and Mathematical Engineering',
-    org: 'Polytechnic University of Catalonia (UPC)',
+    org: 'Polytechnic University of Catalonia',
     url: 'https://mamme.masters.upc.edu/en/',
     start: '2019',
     end: '2020',
@@ -176,6 +176,39 @@ export const teaching = [
     years: '2021, 2022',
     summary:
       'Face-to-face cryptography module: modular arithmetic, RSA and elliptic-curve cryptography, pairings and signatures (ECDSA, BLS), provable security, advanced signature schemes and zero-knowledge proofs, from Schnorr and Fiat–Shamir to zk-SNARKs.',
+  },
+];
+
+export const awards = [
+  {
+    title: 'FI-SDUR 2021 predoctoral grant',
+    by: 'Generalitat de Catalunya',
+    when: '2021 — 2023',
+    note: 'Funding for doctoral research at UPC.',
+  },
+  {
+    title: 'Honorable Mention, Premio Leonardo Torres Quevedo 2020 en Criptología y Seguridad de la Información',
+    by: 'LTQ Awards',
+    when: '2021',
+    note: "For the master's thesis on linkable attribute-based signatures.",
+  },
+];
+
+// `icons` are Simple Icons names (simple-icons package), or 'lean' for the Lean logo drawn in cv.astro.
+// Skills without an official logo get a neutral </> mark on the CV.
+export const skills: { group: string; items: { name: string; icons?: string[] }[] }[] = [
+  {
+    group: 'Programming',
+    items: [
+      { name: 'Rust', icons: ['siRust'] },
+      { name: 'Python / Sage', icons: ['siPython', 'siSagemath'] },
+      { name: 'Lean 4', icons: ['lean'] },
+      { name: 'JavaScript / TS', icons: ['siJavascript', 'siTypescript'] },
+    ],
+  },
+  {
+    group: 'ZK & Blockchain',
+    items: [{ name: 'PIL / PIL2' }, { name: 'Circom' }, { name: 'zkASM' }, { name: 'Solidity', icons: ['siSolidity'] }],
   },
 ];
 

@@ -26,7 +26,8 @@ export default defineConfig({
   redirects: {
     '/post': '/writing',
     '/post/snark-degree': '/writing/snark-degree',
-    '/post/books': '/writing/books',
+    '/post/books': '/writing',
+    '/writing/books': '/writing', // post removed
     '/events': '/talks',
     '/experience': '/about',
   },

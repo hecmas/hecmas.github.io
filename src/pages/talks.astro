@@ -7,7 +7,7 @@ const talks = (await getCollection('talks')).sort((a, b) => b.data.date.valueOf(
 ---
 
 <Base title="Talks" description="Conference talks and workshops on zero-knowledge proofs.">
-  <div class="container">
+  <div class="container narrow">
     <header class="page-head">
       <h1>Talks</h1>
       <p>Conference talks and workshops.</p>
@@ -22,6 +22,5 @@ const talks = (await getCollection('talks')).sort((a, b) => b.data.date.valueOf(
   .list {
     display: grid;
     gap: 2.25rem;
-    max-width: var(--wide);
   }
 </style>

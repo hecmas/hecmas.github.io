@@ -1,0 +1,125 @@
+---
+// The CTF's secret page: reached by XOR-ing the two shares (see src/data/ctf.ts).
+// Marked noindex and kept out of the sitemap.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import TraceTable from '../components/TraceTable.astro';
+import avatar from '../assets/me.png';
+import { profile } from '../data/site';
+
+const mail = `mailto:${profile.email}?subject=${encodeURIComponent('I found the witness room')}&body=${encodeURIComponent('flag: ')}`;
+---
+
+<Base title="Witness accepted" noindex>
+  <section class="container room">
+    <div class="room-text">
+      <p class="eyebrow">🏁 witness accepted</p>
+      <h1>You found the witness room.</h1>
+      <p class="lede">Two shares, one XOR, and a flag that never existed in one place until you put it together.</p>
+      <p>
+        That was 2-of-2 secret sharing: each share on its own is indistinguishable from random noise, and together they
+        reconstruct the secret exactly. Not bad for something hiding in a console log.
+      </p>
+      <p>
+        If you got here by solving it, not by reading the repo, <a href={mail}>send me the flag</a>. I keep a list of
+        everyone who finds it.
+      </p>
+      <button type="button" class="play" data-open-puzzle>Now go break a circuit →</button>
+    </div>
+    <div class="room-art">
+      <div class="room-trace"><TraceTable /></div>
+      <Image src={avatar} alt="A blindfolded monkey typing at a keyboard" width={240} height={240} />
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelector('[data-open-puzzle]')?.addEventListener('click', () => {
+    document.querySelector<HTMLButtonElement>('[data-launcher]')?.click();
+  });
+</script>
+
+<style>
+  .room {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    padding-block: 5rem 3rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    letter-spacing: -0.02em;
+    margin-top: 0.75rem;
+  }
+  .eyebrow {
+    color: var(--accent);
+  }
+  .lede {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--muted);
+    margin: 1rem 0 0;
+    max-width: 36rem;
+  }
+  .room-text > p:not(.eyebrow):not(.lede) {
+    margin: 1.25rem 0 0;
+    max-width: 36rem;
+  }
+  .room-text a {
+    color: var(--accent);
+  }
+  .play {
+    margin-top: 1.75rem;
+    padding: 0.6rem 1rem;
+    border: 0;
+    border-radius: 4px;
+    background: var(--fg);
+    color: var(--bg);
+    font: 500 0.9rem var(--font-sans);
+    cursor: pointer;
+  }
+  .play:hover {
+    background: var(--accent);
+  }
+  .room-art {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .room-trace {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+  .room-art img {
+    position: relative;
+    width: 13rem;
+    height: 13rem;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 0 0 6px var(--bg),
+      0 0 0 7px color-mix(in srgb, var(--gold) 70%, transparent);
+  }
+  @media (max-width: 760px) {
+    .room {
+      grid-template-columns: 1fr;
+      padding-top: 2.5rem;
+    }
+    .room-art {
+      order: -1;
+      justify-items: start;
+    }
+    .room-trace {
+      display: none;
+    }
+    .room-art img {
+      width: 7rem;
+      height: 7rem;
+    }
+  }
+</style>

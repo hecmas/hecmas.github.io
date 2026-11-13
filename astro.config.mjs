@@ -10,7 +10,7 @@ import { remarkAlerts } from './src/lib/remark-alerts.mjs';
 export default defineConfig({
   site: 'https://hecmas.github.io',
   trailingSlash: 'ignore',
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/witness-7f3a') })],
   markdown: {
     // Astro 7 defaults to the Sätteri processor; unified (remark/rehype) is used here
     // because KaTeX math rendering relies on remark-math + rehype-katex.

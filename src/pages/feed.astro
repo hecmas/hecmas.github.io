@@ -1,0 +1,127 @@
+---
+// Human-readable landing page for the RSS feed. Browsers show /rss.xml as raw XML (or download it),
+// so the footer's feed button points here instead. Feed readers still discover /rss.xml through the
+// <link rel="alternate"> tag in every page's head.
+import Base from '../layouts/Base.astro';
+
+const feedUrl = new URL('/rss.xml', Astro.site).toString();
+const enc = encodeURIComponent(feedUrl);
+// Only readers whose links subscribe on demand. (Feedly's one-click link fails with "Feed not found"
+// until the feed is in its index; Feedly users can paste the address instead, see below.)
+const readers = [
+  { name: 'Inoreader', url: `https://www.inoreader.com/?add_feed=${enc}` },
+  { name: 'NewsBlur', url: `https://www.newsblur.com/?url=${enc}` },
+];
+---
+
+<Base title="RSS feed" description="Subscribe to new posts with any feed reader.">
+  <div class="container narrow">
+    <header class="page-head">
+      <p class="eyebrow">RSS feed</p>
+      <h1>Follow new posts</h1>
+      <p>
+        Add this address to any feed reader (NetNewsWire, Reeder, Feedly, Inoreader, Thunderbird…) and new posts will
+        show up there automatically. No account, no email.
+      </p>
+    </header>
+
+    <div class="feed-url">
+      <code data-url>{feedUrl}</code>
+      <button type="button" class="copy" data-copy>Copy</button>
+    </div>
+
+    <p class="or">Or subscribe in one click:</p>
+    <ul class="readers">
+      {
+        readers.map((r) => (
+          <li>
+            <a href={r.url} rel="noopener">
+              {r.name} ↗
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="hint">Using Feedly? Click <strong>Follow</strong> (or <strong>+</strong>) and paste the address above.</p>
+  </div>
+</Base>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const url = document.querySelector('[data-url]')?.textContent ?? '';
+  btn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      btn.textContent = 'Copied ✓';
+    } catch {
+      btn.textContent = 'Select it and copy';
+    }
+    setTimeout(() => (btn.textContent = 'Copy'), 1800);
+  });
+</script>
+
+<style>
+  .eyebrow {
+    color: var(--accent);
+    margin: 0 0 0.6rem;
+  }
+  .feed-url {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .feed-url code {
+    flex: 1 1 18rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    background: var(--surface);
+    font-size: 0.9rem;
+    user-select: all;
+    overflow-wrap: anywhere;
+  }
+  .copy {
+    padding: 0.6rem 1rem;
+    border: 0;
+    border-radius: 4px;
+    background: var(--fg);
+    color: var(--bg);
+    font: 500 0.9rem var(--font-sans);
+    cursor: pointer;
+  }
+  .copy:hover {
+    background: var(--accent);
+  }
+  .or {
+    margin: 2rem 0 0.75rem;
+    color: var(--muted);
+  }
+  .readers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .readers a {
+    display: inline-block;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--fg);
+  }
+  .hint {
+    margin: 1.25rem 0 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .readers a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+</style>
